@@ -1,6 +1,13 @@
 # WanAndroidClient
 www.wanandroid.com client
 
+<br>
+
+![](https://img.shields.io/badge/language-java-orange.svg)
+![](https://img.shields.io/hexpm/l/plug.svg)
+![](https://img.shields.io/badge/to%20be%20happy-%E5%BC%80%E5%BF%83%E5%B0%B1%E5%A5%BD-green.svg)
+
+<br>
 
 
 ```
