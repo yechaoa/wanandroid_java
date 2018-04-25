@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CommonViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] title;
+    private String[] title;a
     private List<Fragment> mFragments = new ArrayList<>();
 
     public CommonViewPagerAdapter(FragmentManager fm, String[] titles) {
