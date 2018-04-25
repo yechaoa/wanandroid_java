@@ -6,6 +6,8 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="loading">加载中</string>
+
 
     <string name="title_home">首页</string>
     <string name="title_tree">体系</string>

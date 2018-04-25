@@ -59,7 +59,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
 
     @Override
     public void showProgress() {
-        YUtils.showLoading(getActivity(), "加载中");
+        YUtils.showLoading(getActivity(), getResources().getString(R.string.loading));
         LogUtil.i("showProgress");
     }
 
