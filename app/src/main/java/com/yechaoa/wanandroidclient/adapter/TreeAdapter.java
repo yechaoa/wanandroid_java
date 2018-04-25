@@ -25,7 +25,7 @@ public class TreeAdapter extends BaseQuickAdapter<Tree.DataBean, BaseViewHolder>
         helper.setText(R.id.tree_name, item.name);
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < item.children.size(); i++)
-            stringBuilder.append(String.valueOf(item.children.get(i).name + "\t\t\t"));
+            stringBuilder.append(String.valueOf(item.children.get(i).name + "   "));
         helper.setText(R.id.tree_child_name, stringBuilder);
     }
 }
