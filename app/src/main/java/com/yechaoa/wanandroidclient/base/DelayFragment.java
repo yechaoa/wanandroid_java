@@ -9,7 +9,7 @@ package com.yechaoa.wanandroidclient.base;
  */
 public abstract class DelayFragment extends BaseFragment {
 
-    protected boolean isVisible;
+    protected boolean isVisible;a
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
