@@ -18,7 +18,9 @@ import android.view.View;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
-import com.yechaoa.wanandroidclient.module.category.Fragment2;
+import com.yechaoa.wanandroidclient.module.navi.NaviFragment;
+import com.yechaoa.wanandroidclient.module.project.ProjectFragment;
+import com.yechaoa.wanandroidclient.module.tree.TreeFragment;
 import com.yechaoa.wanandroidclient.module.home.HomeFragment;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.ToastUtil;
@@ -65,11 +67,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //todo
-        String[] tabTitles = new String[]{"未回复", "已回复"};
         CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager());
         infoPagerAdapter.addFragment(new HomeFragment());
-        infoPagerAdapter.addFragment(new Fragment2());
+        infoPagerAdapter.addFragment(new TreeFragment());
+        infoPagerAdapter.addFragment(new NaviFragment());
+        infoPagerAdapter.addFragment(new ProjectFragment());
 
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(infoPagerAdapter);

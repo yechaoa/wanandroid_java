@@ -1,14 +1,14 @@
-package com.yechaoa.wanandroidclient.module.category;
+package com.yechaoa.wanandroidclient.module.project;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.base.BaseFragment;
 
 
-public class Fragment2 extends BaseFragment {
+public class ProjectFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_fragment2;
+        return R.layout.fragment_project;
     }
 
     @Override
