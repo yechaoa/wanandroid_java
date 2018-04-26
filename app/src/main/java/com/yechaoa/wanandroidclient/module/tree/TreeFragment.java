@@ -79,4 +79,12 @@ public class TreeFragment extends DelayFragment implements TreeContract.ITreeVie
         // TODO: 2018/4/25 处理点击事件
         ToastUtil.showToast(mTreeList.get(position).name);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (null != mTreePresenter) {
+            mTreePresenter.unSubscribe();
+        }
+    }
 }

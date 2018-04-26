@@ -54,4 +54,6 @@ dependencies {
     /*BRVAH*/
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
 
+    compile 'q.rorbin:VerticalTabLayout:1.2.7'
+
 }

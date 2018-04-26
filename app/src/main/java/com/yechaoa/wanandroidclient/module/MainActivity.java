@@ -18,10 +18,10 @@ import android.view.View;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
+import com.yechaoa.wanandroidclient.module.home.HomeFragment;
 import com.yechaoa.wanandroidclient.module.navi.NaviFragment;
 import com.yechaoa.wanandroidclient.module.project.ProjectFragment;
 import com.yechaoa.wanandroidclient.module.tree.TreeFragment;
-import com.yechaoa.wanandroidclient.module.home.HomeFragment;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.ToastUtil;
 
@@ -34,6 +34,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ViewPager mViewPager;
     @BindView(R.id.bottom_navigation)
     BottomNavigationView mBottomNavigation;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+    @BindView(R.id.nav_view)
+    NavigationView mNavView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -57,14 +63,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavView.setNavigationItemSelectedListener(this);
 
 
         CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager());
@@ -111,12 +115,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.navigation_tree:
                     mViewPager.setCurrentItem(1);
+                    mToolbar.setTitle(getResources().getString(R.string.title_tree));
                     return true;
                 case R.id.navigation_navi:
                     mViewPager.setCurrentItem(2);
+                    mToolbar.setTitle(getResources().getString(R.string.title_navi));
                     return true;
                 case R.id.navigation_project:
                     mViewPager.setCurrentItem(3);
+                    mToolbar.setTitle(getResources().getString(R.string.title_project));
                     return true;
             }
             return false;

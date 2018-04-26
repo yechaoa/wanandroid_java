@@ -2,6 +2,7 @@ package com.yechaoa.wanandroidclient.http;
 
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Banner;
+import com.yechaoa.wanandroidclient.bean.Navi;
 import com.yechaoa.wanandroidclient.bean.Tree;
 
 import retrofit2.http.GET;
@@ -40,6 +41,11 @@ public class API {
         Observable<Tree> getTreeList();
 
 
+        //-----------------------【  导航  】----------------------
+
+        //导航数据
+        @GET("navi/json")
+        Observable<Navi> getNaviList();
 
 
     }
