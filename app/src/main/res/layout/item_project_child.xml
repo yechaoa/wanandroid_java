@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/dp_5"
+    app:cardElevation="@dimen/dp_10"
+    app:contentPadding="@dimen/dp_10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/item_project_child_pic"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_project_child_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/app_name"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/item_project_child_desc"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:text="@string/app_name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_project_child_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/app_name" />
+
+                <TextView
+                    android:id="@+id/item_project_child_author"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/app_name" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -14,10 +14,10 @@ import java.util.List;
 
 public class CommonViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] title;
+    private List<String> title;
     private List<Fragment> mFragments = new ArrayList<>();
 
-    public CommonViewPagerAdapter(FragmentManager fm, String[] titles) {
+    public CommonViewPagerAdapter(FragmentManager fm, List<String> titles) {
         super(fm);
         title = titles;
     }
@@ -42,6 +42,6 @@ public class CommonViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return title[position];
+        return title.get(position);
     }
 }

@@ -3,10 +3,13 @@ package com.yechaoa.wanandroidclient.http;
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Banner;
 import com.yechaoa.wanandroidclient.bean.Navi;
+import com.yechaoa.wanandroidclient.bean.Project;
+import com.yechaoa.wanandroidclient.bean.ProjectChild;
 import com.yechaoa.wanandroidclient.bean.Tree;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -47,6 +50,16 @@ public class API {
         @GET("navi/json")
         Observable<Navi> getNaviList();
 
+
+        //-----------------------【  项目  】----------------------
+
+        //项目分类
+        @GET("project/tree/json")
+        Observable<Project> getProjectList();
+
+        //项目列表数据  ?后面的要用@Query，且不在url后面拼接
+        @GET("project/list/{page}/json?")
+        Observable<ProjectChild> getProjectChildList(@Path("page") Integer page, @Query("cid") Integer cid);
 
     }
 

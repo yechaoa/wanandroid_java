@@ -10,5 +10,6 @@
     <color name="gray">#757575</color>
     <color name="line">#BDBDBD</color>
     <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
 
 </resources>

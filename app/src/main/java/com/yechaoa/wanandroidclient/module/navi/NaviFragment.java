@@ -2,6 +2,7 @@ package com.yechaoa.wanandroidclient.module.navi;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,6 +40,7 @@ public class NaviFragment extends DelayFragment implements NaviContract.INaviVie
     @Override
     protected void initView() {
         mNaviRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+//        mNaviRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
