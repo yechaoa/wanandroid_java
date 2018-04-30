@@ -6,6 +6,7 @@ import com.yechaoa.wanandroidclient.bean.Navi;
 import com.yechaoa.wanandroidclient.bean.Project;
 import com.yechaoa.wanandroidclient.bean.ProjectChild;
 import com.yechaoa.wanandroidclient.bean.Tree;
+import com.yechaoa.wanandroidclient.bean.TreeChild;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -42,6 +43,10 @@ public class API {
         //体系数据
         @GET("tree/json")
         Observable<Tree> getTreeList();
+
+        //知识体系下的文章
+        @GET("article/list/{page}/json?")
+        Observable<TreeChild> getTreeChildList(@Path("page") Integer page, @Query("cid") Integer cid);
 
 
         //-----------------------【  导航  】----------------------

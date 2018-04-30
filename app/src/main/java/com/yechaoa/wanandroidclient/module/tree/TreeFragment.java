@@ -1,5 +1,6 @@
 package com.yechaoa.wanandroidclient.module.tree;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,9 +10,11 @@ import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.TreeAdapter;
 import com.yechaoa.wanandroidclient.base.DelayFragment;
 import com.yechaoa.wanandroidclient.bean.Tree;
+import com.yechaoa.wanandroidclient.module.tree.tree_child.TreeChildActivity;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -78,6 +81,11 @@ public class TreeFragment extends DelayFragment implements TreeContract.ITreeVie
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         // TODO: 2018/4/25 处理点击事件
         ToastUtil.showToast(mTreeList.get(position).name);
+
+        Intent intent = new Intent(mContext, TreeChildActivity.class);
+        intent.putExtra(TreeChildActivity.CID, (Serializable) mTreeList.get(position).children);
+        startActivity(intent);
+
     }
 
     @Override

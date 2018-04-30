@@ -54,10 +54,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
-    protected abstract void initData();
-
     protected abstract void initView();
 
-    protected abstract void initListener();
+    protected abstract void initData();
+
+    protected void initListener(){}
 
 }
