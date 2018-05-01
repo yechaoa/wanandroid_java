@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mViewPager.setCurrentItem(0);
+                    mToolbar.setTitle(getResources().getString(R.string.title_home));
                     return true;
                 case R.id.navigation_tree:
                     mViewPager.setCurrentItem(1);

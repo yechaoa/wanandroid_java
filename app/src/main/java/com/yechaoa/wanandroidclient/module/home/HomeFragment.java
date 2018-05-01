@@ -1,5 +1,6 @@
 package com.yechaoa.wanandroidclient.module.home;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.yechaoa.wanandroidclient.base.BaseFragment;
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Banner;
 import com.yechaoa.wanandroidclient.common.GlideImageLoader;
+import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
@@ -76,10 +78,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
         mBanners = list;
 
         List<String> images = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
+        //List<String> titles = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             images.add(list.get(i).imagePath);
-            titles.add(list.get(i).title);
+            //titles.add(list.get(i).title);
         }
 
         //图片宽高比例是1.8，所以动态设置banner的高度
@@ -97,9 +99,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     @Override
     public void OnBannerClick(int position) {
         if (0 != mBanners.size()) {
-            // TODO: 2018/4/22 处理点击事件
-            LogUtil.i(mBanners.get(position).title);
-            ToastUtil.showToast(mBanners.get(position).title);
+            Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+            intent.putExtra(ArticleDetailActivity.WEB_URL, mBanners.get(position).url);
+            startActivity(intent);
         }
     }
 
@@ -129,16 +131,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
         //item子view点击
         mArticleAdapter.setOnItemChildClickListener(this);
         //加载更多
-        mArticleAdapter.setOnLoadMoreListener(this);
+        mArticleAdapter.setOnLoadMoreListener(this, mHomeRecyclerView);
 
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (0 != mArticles.size()) {
-            // TODO: 2018/4/22 处理点击事件 下拉刷新上拉加载
-            LogUtil.i(mArticles.get(position).title);
-            ToastUtil.showToast(mArticles.get(position).title);
+            Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+            intent.putExtra(ArticleDetailActivity.WEB_URL, mArticles.get(position).link);
+            startActivity(intent);
         }
     }
 

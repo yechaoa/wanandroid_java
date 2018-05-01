@@ -1,5 +1,6 @@
 package com.yechaoa.wanandroidclient.module.tree.tree_child;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.TreeChildAdapter;
 import com.yechaoa.wanandroidclient.base.DelayFragment;
 import com.yechaoa.wanandroidclient.bean.TreeChild;
+import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 
@@ -106,7 +108,9 @@ public class TreeChildFragment extends DelayFragment implements TreeChildContrac
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ToastUtil.showToast(mTCList.get(position).title);
+        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+        intent.putExtra(ArticleDetailActivity.WEB_URL, mTCList.get(position).link);
+        startActivity(intent);
     }
 
     @Override

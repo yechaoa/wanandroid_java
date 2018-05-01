@@ -1,5 +1,6 @@
 package com.yechaoa.wanandroidclient.module.project.project_child;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.ProjectChildAdapter;
 import com.yechaoa.wanandroidclient.base.DelayFragment;
 import com.yechaoa.wanandroidclient.bean.ProjectChild;
+import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 
@@ -105,6 +107,8 @@ public class ProjectChildFragment extends DelayFragment implements ProjectChildC
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ToastUtil.showToast(mPCList.get(position).title);
+        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+        intent.putExtra(ArticleDetailActivity.WEB_URL, mPCList.get(position).link);
+        startActivity(intent);
     }
 }

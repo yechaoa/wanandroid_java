@@ -1,8 +1,8 @@
 package com.yechaoa.wanandroidclient.module.navi;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -10,6 +10,7 @@ import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.NaviChildAdapter;
 import com.yechaoa.wanandroidclient.base.DelayFragment;
 import com.yechaoa.wanandroidclient.bean.Navi;
+import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 
@@ -95,16 +96,15 @@ public class NaviFragment extends DelayFragment implements NaviContract.INaviVie
         mTabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-
-                ToastUtil.showToast(mNaviList.get(position).name);
-
                 final List<Navi.DataBean.ArticlesBean> articles = mNaviList.get(position).articles;
                 NaviChildAdapter naviChildAdapter = new NaviChildAdapter(R.layout.item_navi_list, articles);
                 mNaviRecyclerView.setAdapter(naviChildAdapter);
                 naviChildAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        ToastUtil.showToast(articles.get(position).title);
+                        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+                        intent.putExtra(ArticleDetailActivity.WEB_URL, articles.get(position).link);
+                        startActivity(intent);
                     }
                 });
             }
@@ -141,7 +141,9 @@ public class NaviFragment extends DelayFragment implements NaviContract.INaviVie
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ToastUtil.showToast(mArticles.get(position).title);
+        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+        intent.putExtra(ArticleDetailActivity.WEB_URL, mArticles.get(position).link);
+        startActivity(intent);
     }
 
     @Override
