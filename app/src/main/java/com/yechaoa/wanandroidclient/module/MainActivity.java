@@ -1,5 +1,6 @@
 package com.yechaoa.wanandroidclient.module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,11 +19,14 @@ import android.view.View;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
+import com.yechaoa.wanandroidclient.common.GlobalConstant;
 import com.yechaoa.wanandroidclient.module.home.HomeFragment;
+import com.yechaoa.wanandroidclient.module.login.LoginActivity;
 import com.yechaoa.wanandroidclient.module.navi.NaviFragment;
 import com.yechaoa.wanandroidclient.module.project.ProjectFragment;
 import com.yechaoa.wanandroidclient.module.tree.TreeFragment;
 import com.yechaoa.yutils.ActivityUtil;
+import com.yechaoa.yutils.SpUtil;
 import com.yechaoa.yutils.ToastUtil;
 
 import butterknife.BindView;
@@ -193,7 +197,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            // TODO: 2018/5/6 dialog提示
+            SpUtil.setBoolean(GlobalConstant.IS_LOGIN,false);
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

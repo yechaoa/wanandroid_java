@@ -31,7 +31,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send"/>
+                android:title="退出登录"/>
         </menu>
     </item>
 

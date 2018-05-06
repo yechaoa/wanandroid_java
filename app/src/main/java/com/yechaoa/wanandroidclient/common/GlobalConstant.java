@@ -9,6 +9,8 @@ package com.yechaoa.wanandroidclient.common;
  */
 public class GlobalConstant {
 
-    public static final String TEST = "";
+    public static final String IS_LOGIN = "isLogin";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
 
 }

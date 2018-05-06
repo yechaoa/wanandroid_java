@@ -11,5 +11,7 @@
     <color name="line">#BDBDBD</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="orange">#FF8C00</color>
 
 </resources>

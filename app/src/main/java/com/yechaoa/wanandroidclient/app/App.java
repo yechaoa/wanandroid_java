@@ -1,6 +1,8 @@
 package com.yechaoa.wanandroidclient.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.LogUtil;
@@ -14,6 +16,12 @@ import com.yechaoa.yutils.YUtils;
  * Describe :
  */
 public class App extends Application {
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {

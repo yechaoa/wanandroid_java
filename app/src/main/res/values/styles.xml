@@ -17,4 +17,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+
+    <!--Error label text style-->
+    <style name="MyErrorText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <!--Overflow label text style-->
+    <style name="MyOverflowText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
 </resources>

@@ -7,8 +7,12 @@ import com.yechaoa.wanandroidclient.bean.Project;
 import com.yechaoa.wanandroidclient.bean.ProjectChild;
 import com.yechaoa.wanandroidclient.bean.Tree;
 import com.yechaoa.wanandroidclient.bean.TreeChild;
+import com.yechaoa.wanandroidclient.bean.User;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -65,6 +69,19 @@ public class API {
         //项目列表数据  ?后面的要用@Query，且不在url后面拼接
         @GET("project/list/{page}/json?")
         Observable<ProjectChild> getProjectChildList(@Path("page") Integer page, @Query("cid") Integer cid);
+
+
+        //-----------------------【登录注册】----------------------
+
+        //登录
+        @FormUrlEncoded
+        @POST("user/login")
+        Observable<User> login(@Field("username") String username, @Field("password") String password);
+
+        //注册
+        @FormUrlEncoded
+        @POST("user/register")
+        Observable<User> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
 
     }
 
