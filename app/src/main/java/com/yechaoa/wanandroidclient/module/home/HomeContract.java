@@ -30,6 +30,10 @@ public interface HomeContract {
 
         void showArticleErrorByMore(String errorMessage);
 
+        void showCollectSuccess(String successMessage);
+
+        void showCollectError(String errorMessage);
+
     }
 
     interface IHomePresenter extends BasePresenter {
@@ -39,6 +43,8 @@ public interface HomeContract {
         void getArticleList();
 
         void getArticleListByMore(int page);
+
+        void collect(int id);
 
     }
 

@@ -2,6 +2,7 @@ package com.yechaoa.wanandroidclient.module.home;
 
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Banner;
+import com.yechaoa.wanandroidclient.bean.Common;
 import com.yechaoa.wanandroidclient.http.API;
 import com.yechaoa.wanandroidclient.http.RetrofitService;
 import com.yechaoa.yutils.LogUtil;
@@ -146,6 +147,33 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                         mIHomeView.setArticleDataByMore(article.data.datas);
                     }
                 });
+    }
+
+    @Override
+    public void collect(int id) {
+
+        mSubscription = RetrofitService.create(API.WAZApi.class)
+                .collectIn(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Common>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mIHomeView.showCollectError("收藏失败"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Common common) {
+                        mIHomeView.showCollectSuccess("收藏成功");
+                    }
+                });
+
     }
 
 }

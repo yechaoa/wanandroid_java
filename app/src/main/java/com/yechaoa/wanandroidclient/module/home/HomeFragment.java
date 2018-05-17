@@ -1,11 +1,14 @@
 package com.yechaoa.wanandroidclient.module.home;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.ArticleAdapter;
@@ -36,6 +39,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     private int mCurrentCounter;//上一次加载的数量
     private int TOTAL_COUNTER = 20;//每一次加载的数量
     private int page = 0;//记录分页
+    private int mPosition;
 
     @Override
     protected int getLayoutId() {
@@ -148,8 +152,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.article_favorite:
-                // TODO: 2018/4/24 账号收藏
-                ToastUtil.showToast("收藏---" + mArticles.get(position).title);
+                mPosition=position;
+                mHomePresenter.collect(mArticles.get(position).id);
                 break;
         }
     }
@@ -188,8 +192,21 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
 
     @Override
     public void showArticleErrorByMore(String errorMessage) {
-        ToastUtil.showToast("加载失败");
+        ToastUtil.showToast(errorMessage);
         mArticleAdapter.loadMoreFail();
+    }
+
+    @Override
+    public void showCollectSuccess(String successMessage) {
+        ToastUtil.showToast(successMessage);
+
+        mArticles.get(mPosition).collect=true;
+        mArticleAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showCollectError(String errorMessage) {
+        ToastUtil.showToast(errorMessage);
     }
 
     @Override

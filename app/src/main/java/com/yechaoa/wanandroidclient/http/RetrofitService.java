@@ -21,11 +21,13 @@ public class RetrofitService {
     //初始化retrofit
     public static <T> T create(final Class<T> service) {
 
-        //配置okhttp并设置时间和日志信息
+        //配置okhttp并设置时间、日志信息和cookies
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new ReceivedCookiesInterceptor())
+                .addInterceptor(new AddCookiesInterceptor())
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .build();
 

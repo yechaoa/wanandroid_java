@@ -2,6 +2,8 @@ package com.yechaoa.wanandroidclient.http;
 
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Banner;
+import com.yechaoa.wanandroidclient.bean.Collect;
+import com.yechaoa.wanandroidclient.bean.Common;
 import com.yechaoa.wanandroidclient.bean.Navi;
 import com.yechaoa.wanandroidclient.bean.Project;
 import com.yechaoa.wanandroidclient.bean.ProjectChild;
@@ -82,6 +84,30 @@ public class API {
         @FormUrlEncoded
         @POST("user/register")
         Observable<User> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
+
+
+        //-----------------------【登录注册】----------------------
+
+        //首页文章列表
+        @GET("lg/collect/list/{page}/json")
+        Observable<Collect> getCollectList(@Path("page") Integer page);
+
+        //收藏站内文章
+        @POST("lg/collect/{id}/json")
+        Observable<Common> collectIn(@Path("id") Integer id);
+
+        //收藏站外文章
+        @FormUrlEncoded
+        @POST("lg/collect/add/json")
+        Observable<Common> collectOut(@Field("title") String title, @Field("author") String author,@Field("link") String link);
+
+        //取消收藏---文章列表
+        @POST("lg/uncollect_originId/{id}/json")
+        Observable<Common> uncollect(@Path("id") Integer id);
+
+        //取消收藏---我的收藏页面
+        @POST("lg/uncollect/{id}/json")
+        Observable<Common> uncollect1(@Path("id") Integer id);
 
     }
 

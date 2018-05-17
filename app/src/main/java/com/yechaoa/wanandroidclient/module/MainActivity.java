@@ -28,6 +28,7 @@ import com.yechaoa.wanandroidclient.module.tree.TreeFragment;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.SpUtil;
 import com.yechaoa.yutils.ToastUtil;
+import com.yechaoa.yutils.YUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -186,7 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_collect) {
+            ToastUtil.showToast("我的收藏");
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
