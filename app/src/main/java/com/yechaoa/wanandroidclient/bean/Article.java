@@ -76,6 +76,7 @@ public class Article {
             public String envelopePic;
             public boolean fresh;
             public int id;
+            public int originId;
             public String link;
             public String niceDate;
             public String origin;

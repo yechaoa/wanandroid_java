@@ -86,11 +86,11 @@ public class API {
         Observable<User> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
 
 
-        //-----------------------【登录注册】----------------------
+        //-----------------------【  收藏  】----------------------
 
-        //首页文章列表
+        //收藏文章列表
         @GET("lg/collect/list/{page}/json")
-        Observable<Collect> getCollectList(@Path("page") Integer page);
+        Observable<Article> getCollectList(@Path("page") Integer page);
 
         //收藏站内文章
         @POST("lg/collect/{id}/json")
@@ -106,8 +106,9 @@ public class API {
         Observable<Common> uncollect(@Path("id") Integer id);
 
         //取消收藏---我的收藏页面
+        @FormUrlEncoded
         @POST("lg/uncollect/{id}/json")
-        Observable<Common> uncollect1(@Path("id") Integer id);
+        Observable<Common> uncollect1(@Path("id") Integer id,@Field("originId") Integer originId);
 
     }
 

@@ -79,13 +79,9 @@ public class TreeFragment extends DelayFragment implements TreeContract.ITreeVie
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        // TODO: 2018/4/25 处理点击事件
-        ToastUtil.showToast(mTreeList.get(position).name);
-
         Intent intent = new Intent(mContext, TreeChildActivity.class);
         intent.putExtra(TreeChildActivity.CID, (Serializable) mTreeList.get(position).children);
         startActivity(intent);
-
     }
 
     @Override

@@ -29,6 +29,8 @@ public class TreeChildFragment extends DelayFragment implements TreeChildContrac
     private TreeChildPresenter mTreeChildPresenter;
     private List<TreeChild.DataBean.DatasBean> mTCList;
     private int mCid;
+    private int mPosition;
+    private TreeChildAdapter mTreeChildAdapter;
 
     /**
      * 创建fragment
@@ -76,10 +78,10 @@ public class TreeChildFragment extends DelayFragment implements TreeChildContrac
     @Override
     public void setTreeChildData(List<TreeChild.DataBean.DatasBean> list) {
         mTCList = list;
-        TreeChildAdapter articleAdapter = new TreeChildAdapter(R.layout.item_article_list, list);
-        mPCRecyclerView.setAdapter(articleAdapter);
-        articleAdapter.setOnItemClickListener(this);
-        articleAdapter.setOnItemChildClickListener(this);
+        mTreeChildAdapter = new TreeChildAdapter(R.layout.item_article_list, list);
+        mPCRecyclerView.setAdapter(mTreeChildAdapter);
+        mTreeChildAdapter.setOnItemClickListener(this);
+        mTreeChildAdapter.setOnItemChildClickListener(this);
     }
 
     @Override
@@ -117,9 +119,36 @@ public class TreeChildFragment extends DelayFragment implements TreeChildContrac
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.article_favorite:
-                // TODO: 2018/4/24 账号收藏
-                ToastUtil.showToast("收藏---" + mTCList.get(position).title);
+                mPosition = position;
+                if (mTCList.get(position).collect)
+                    mTreeChildPresenter.uncollect(mTCList.get(position).id);
+                else
+                    mTreeChildPresenter.collect(mTCList.get(position).id);
                 break;
         }
+    }
+
+    @Override
+    public void showCollectSuccess(String successMessage) {
+        ToastUtil.showToast(successMessage);
+        mTCList.get(mPosition).collect = true;
+        mTreeChildAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showCollectError(String errorMessage) {
+        ToastUtil.showToast(errorMessage);
+    }
+
+    @Override
+    public void showUncollectSuccess(String successMessage) {
+        ToastUtil.showToast(successMessage);
+        mTCList.get(mPosition).collect = false;
+        mTreeChildAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showUncollectError(String errorMessage) {
+        ToastUtil.showToast(errorMessage);
     }
 }

@@ -1,14 +1,11 @@
 package com.yechaoa.wanandroidclient.module.home;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.ArticleAdapter;
@@ -17,7 +14,6 @@ import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Banner;
 import com.yechaoa.wanandroidclient.common.GlideImageLoader;
 import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
-import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 import com.youth.banner.listener.OnBannerListener;
@@ -60,25 +56,27 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     @Override
     protected void initData() {
         //订阅
+        //mHomePresenter.subscribe();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mHomePresenter.subscribe();
     }
 
     @Override
     public void showProgress() {
         YUtils.showLoading(getActivity(), getResources().getString(R.string.loading));
-        LogUtil.i("showProgress");
     }
 
     @Override
     public void hideProgress() {
         YUtils.dismissLoading();
-        LogUtil.i("hideProgress");
     }
 
     @Override
     public void setBannerData(List<Banner.DataBean> list) {
-        LogUtil.i("页面拿到的数据" + list.toString());
-
         mBanners = list;
 
         List<String> images = new ArrayList<>();
@@ -152,8 +150,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.article_favorite:
-                mPosition=position;
-                mHomePresenter.collect(mArticles.get(position).id);
+                mPosition = position;
+                if (mArticles.get(position).collect)
+                    mHomePresenter.uncollect(mArticles.get(position).id);
+                else
+                    mHomePresenter.collect(mArticles.get(position).id);
                 break;
         }
     }
@@ -199,13 +200,24 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     @Override
     public void showCollectSuccess(String successMessage) {
         ToastUtil.showToast(successMessage);
-
-        mArticles.get(mPosition).collect=true;
+        mArticles.get(mPosition).collect = true;
         mArticleAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showCollectError(String errorMessage) {
+        ToastUtil.showToast(errorMessage);
+    }
+
+    @Override
+    public void showUncollectSuccess(String successMessage) {
+        ToastUtil.showToast(successMessage);
+        mArticles.get(mPosition).collect = false;
+        mArticleAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showUncollectError(String errorMessage) {
         ToastUtil.showToast(errorMessage);
     }
 

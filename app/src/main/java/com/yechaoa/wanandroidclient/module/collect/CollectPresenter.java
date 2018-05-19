@@ -1,7 +1,7 @@
-package com.yechaoa.wanandroidclient.module.tree.tree_child;
+package com.yechaoa.wanandroidclient.module.collect;
 
+import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.bean.Common;
-import com.yechaoa.wanandroidclient.bean.TreeChild;
 import com.yechaoa.wanandroidclient.http.API;
 import com.yechaoa.wanandroidclient.http.RetrofitService;
 import com.yechaoa.yutils.LogUtil;
@@ -15,21 +15,21 @@ import rx.schedulers.Schedulers;
  * GitHub : https://github.com/yechaoa
  * CSDN : http://blog.csdn.net/yechaoa
  * <p>
- * Created by yechao on 2018/4/30.
+ * Created by yechao on 2018/5/19.
  * Describe :
  */
-public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter {
+public class CollectPresenter implements CollectContract.ICollectPresenter {
 
     private Subscription mSubscription = null;
-    private TreeChildContract.ITreeChildView mITreeChildView;
+    private CollectContract.ICollectView mICollectView;
 
-    TreeChildPresenter(TreeChildContract.ITreeChildView treeChildView) {
-        mITreeChildView = treeChildView;
+    CollectPresenter(CollectContract.ICollectView collectView) {
+        mICollectView = collectView;
     }
 
     @Override
     public void subscribe() {
-        //getProjectChildList();
+        getArticleList();
     }
 
     @Override
@@ -40,39 +40,75 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
     }
 
     @Override
-    public void getTreeChildList(int page, int cid) {
+    public void getArticleList() {
 
         mSubscription = RetrofitService.create(API.WAZApi.class)
-                .getTreeChildList(page, cid)
+                .getCollectList(0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TreeChild>() {
+                .subscribe(new Observer<Article>() {
 
                     @Override
                     public void onCompleted() {
-                        mITreeChildView.hideProgress();
+                        mICollectView.hideProgress();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
-                        mITreeChildView.hideProgress();
-                        mITreeChildView.showTreeChildError("加载失败");
+                        mICollectView.hideProgress();
+                        mICollectView.showArticleError("加载失败");
                     }
 
                     @Override
-                    public void onNext(TreeChild treeChild) {
-                        mITreeChildView.showProgress();
-                        mITreeChildView.setTreeChildData(treeChild.data.datas);
+                    public void onNext(Article article) {
+                        mICollectView.showProgress();
+                        if (-1 == article.errorCode)
+                            mICollectView.showArticleError(article.errorMsg);
+                        else
+                            mICollectView.setArticleData(article.data.datas);
+                    }
+                });
+    }
+
+    /**
+     * 加载更多
+     *
+     * @param page 分页参数
+     */
+    @Override
+    public void getArticleListByMore(int page) {
+
+        mSubscription = RetrofitService.create(API.WAZApi.class)
+                .getArticleList(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Article>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mICollectView.hideProgress();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mICollectView.hideProgress();
+                        mICollectView.showArticleErrorByMore("加载失败");
+                    }
+
+                    @Override
+                    public void onNext(Article article) {
+                        mICollectView.showProgress();
+                        mICollectView.setArticleDataByMore(article.data.datas);
                     }
                 });
     }
 
     @Override
-    public void collect(int id) {
+    public void uncollect(int id, int originId) {
 
         mSubscription = RetrofitService.create(API.WAZApi.class)
-                .collectIn(id)
+                .uncollect1(id, originId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Common>() {
@@ -84,46 +120,18 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
 
                     @Override
                     public void onError(Throwable e) {
-                        mITreeChildView.showCollectError("收藏失败" + e.toString());
+                        mICollectView.showUncollectError("取消收藏失败" + e.toString());
                     }
 
                     @Override
                     public void onNext(Common common) {
                         if (-1 == common.errorCode)
-                            mITreeChildView.showCollectError(common.errorMsg);
+                            mICollectView.showUncollectError(common.errorMsg);
                         else
-                            mITreeChildView.showCollectSuccess("收藏成功");
+                            mICollectView.showUncollectSuccess("取消收藏成功");
                     }
                 });
 
-    }
-
-    @Override
-    public void uncollect(int id) {
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .uncollect(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Common>() {
-
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mITreeChildView.showUncollectError("取消收藏失败" + e.toString());
-                    }
-
-                    @Override
-                    public void onNext(Common common) {
-                        if (-1 == common.errorCode)
-                            mITreeChildView.showUncollectError(common.errorMsg);
-                        else
-                            mITreeChildView.showUncollectSuccess("取消收藏成功");
-                    }
-                });
     }
 
 }

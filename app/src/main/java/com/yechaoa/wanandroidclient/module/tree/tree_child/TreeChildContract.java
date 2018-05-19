@@ -21,12 +21,23 @@ public interface TreeChildContract {
 
         void showTreeChildError(String errorMessage);
 
+        void showCollectSuccess(String successMessage);
+
+        void showCollectError(String errorMessage);
+
+        void showUncollectSuccess(String successMessage);
+
+        void showUncollectError(String errorMessage);
+
     }
 
     interface ITreeChildPresenter extends BasePresenter {
 
         void getTreeChildList(int page, int cid);
 
+        void collect(int id);
+
+        void uncollect(int id);
     }
 
 }

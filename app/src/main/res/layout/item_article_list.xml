@@ -78,7 +78,7 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:contentDescription="@null"
-            android:src="@drawable/ic_like" />
+            android:src="@drawable/ic_like_normal" />
 
     </LinearLayout>
 

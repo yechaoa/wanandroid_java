@@ -61,7 +61,7 @@ dependencies {
     /*agentWeb*/
     compile 'com.just.agentweb:agentweb:4.0.2'
 
-    compile'com.android.support:multidex:1.0.3'
+    compile 'com.android.support:multidex:1.0.3'
 
 }
 

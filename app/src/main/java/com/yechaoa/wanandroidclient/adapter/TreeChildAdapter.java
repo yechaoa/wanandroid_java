@@ -30,6 +30,12 @@ public class TreeChildAdapter extends BaseQuickAdapter<TreeChild.DataBean.DatasB
         helper.setText(R.id.article_chapter, item.chapterName);
         helper.setText(R.id.article_author, item.author);
         helper.addOnClickListener(R.id.article_favorite);
+
+        if (item.collect)
+            Glide.with(mContext).load(R.drawable.ic_like_checked).into((ImageView) helper.getView(R.id.article_favorite));
+        else
+            Glide.with(mContext).load(R.drawable.ic_like_normal).into((ImageView) helper.getView(R.id.article_favorite));
+
         Glide.with(mContext).load(R.mipmap.ic_launcher).into((ImageView) helper.getView(R.id.article_image));
 
     }

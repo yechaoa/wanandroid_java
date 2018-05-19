@@ -1,9 +1,8 @@
-package com.yechaoa.wanandroidclient.module.home;
+package com.yechaoa.wanandroidclient.module.collect;
 
 import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.base.BaseView;
 import com.yechaoa.wanandroidclient.bean.Article;
-import com.yechaoa.wanandroidclient.bean.Banner;
 
 import java.util.List;
 
@@ -11,16 +10,12 @@ import java.util.List;
  * GitHub : https://github.com/yechaoa
  * CSDN : http://blog.csdn.net/yechaoa
  * <p>
- * Created by yechao on 2018/4/22.
+ * Created by yechao on 2018/5/19.
  * Describe :
  */
-public interface HomeContract {
+public interface CollectContract {
 
-    interface IHomeView extends BaseView {
-
-        void setBannerData(List<Banner.DataBean> list);
-
-        void showBannerError(String errorMessage);
+    interface ICollectView extends BaseView {
 
         void setArticleData(List<Article.DataBean.DataDetailBean> list);
 
@@ -30,27 +25,19 @@ public interface HomeContract {
 
         void showArticleErrorByMore(String errorMessage);
 
-        void showCollectSuccess(String successMessage);
-
-        void showCollectError(String errorMessage);
-
         void showUncollectSuccess(String successMessage);
 
         void showUncollectError(String errorMessage);
 
     }
 
-    interface IHomePresenter extends BasePresenter {
-
-        void getBannerData();
+    interface ICollectPresenter extends BasePresenter {
 
         void getArticleList();
 
         void getArticleListByMore(int page);
 
-        void collect(int id);
-
-        void uncollect(int id);
+        void uncollect(int id, int originId);
 
     }
 

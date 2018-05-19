@@ -20,6 +20,7 @@ import android.view.View;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
 import com.yechaoa.wanandroidclient.common.GlobalConstant;
+import com.yechaoa.wanandroidclient.module.collect.CollectActivity;
 import com.yechaoa.wanandroidclient.module.home.HomeFragment;
 import com.yechaoa.wanandroidclient.module.login.LoginActivity;
 import com.yechaoa.wanandroidclient.module.navi.NaviFragment;
@@ -28,7 +29,6 @@ import com.yechaoa.wanandroidclient.module.tree.TreeFragment;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.SpUtil;
 import com.yechaoa.yutils.ToastUtil;
-import com.yechaoa.yutils.YUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -188,8 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_collect) {
-            ToastUtil.showToast("我的收藏");
-            // Handle the camera action
+            startActivity(new Intent(this, CollectActivity.class));
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_send) {
             // TODO: 2018/5/6 dialog提示
-            SpUtil.setBoolean(GlobalConstant.IS_LOGIN,false);
+            SpUtil.setBoolean(GlobalConstant.IS_LOGIN, false);
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }

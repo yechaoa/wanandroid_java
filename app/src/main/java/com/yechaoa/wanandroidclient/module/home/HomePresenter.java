@@ -74,7 +74,6 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                     @Override
                     public void onNext(Banner banner) {
                         LogUtil.i("onNext");
-                        LogUtil.d(banner.toString());
                         mIHomeView.showProgress();
                         mIHomeView.setBannerData(banner.data);
                     }
@@ -149,6 +148,11 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                 });
     }
 
+    /**
+     * 收藏
+     *
+     * @param id 文章id
+     */
     @Override
     public void collect(int id) {
 
@@ -165,15 +169,51 @@ public class HomePresenter implements HomeContract.IHomePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mIHomeView.showCollectError("收藏失败"+e.toString());
+                        mIHomeView.showCollectError("收藏失败" + e.toString());
                     }
 
                     @Override
                     public void onNext(Common common) {
-                        mIHomeView.showCollectSuccess("收藏成功");
+                        if (-1 == common.errorCode)
+                            mIHomeView.showCollectError(common.errorMsg);
+                        else
+                            mIHomeView.showCollectSuccess("收藏成功");
                     }
                 });
 
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param id 文章id
+     */
+    @Override
+    public void uncollect(int id) {
+        mSubscription = RetrofitService.create(API.WAZApi.class)
+                .uncollect(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Common>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mIHomeView.showUncollectError("取消收藏失败" + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Common common) {
+                        if (-1 == common.errorCode)
+                            mIHomeView.showUncollectError(common.errorMsg);
+                        else
+                            mIHomeView.showUncollectSuccess("取消收藏成功");
+                    }
+                });
     }
 
 }
