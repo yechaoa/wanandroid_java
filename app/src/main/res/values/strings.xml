@@ -8,11 +8,47 @@
 
     <string name="loading">加载中</string>
 
-
     <string name="title_home">首页</string>
     <string name="title_tree">体系</string>
     <string name="title_navi">导航</string>
     <string name="title_project">项目</string>
+    <string name="title_activity_about">关于我们</string>
+    <string name="github_link">https://github.com/yechaoa/WanAndroidClient</string>
+    <string name="github_title">WanAndroidClient</string>
+    <string name="api_link">http://www.wanandroid.com/blog/show/2</string>
+    <string name="api_title">www.wanandroid.com</string>
+    <string name="large_text">
+        "用到的库：\n\n"
+
+        "com.android.support:cardview-v7:26.1.0\n\n"
+
+        "com.squareup.retrofit2:retrofit:2.3.0\n\n"
+
+        "com.squareup.retrofit2:adapter-rxjava:2.3.0\n\n"
+
+        "com.squareup.retrofit2:converter-gson:2.3.0\n\n"
+
+        "io.reactivex:rxandroid:1.2.1\n\n"
+
+        "com.squareup.okhttp3:logging-interceptor:3.4.1\n\n"
+
+        "com.github.bumptech.glide:glide:4.0.0-RC1\n\n"
+
+        "com.jakewharton:butterknife:8.8.1\n\n"
+
+        "com.github.yechaoa:YUtils:2.0.8\n\n"
+
+        "com.youth.banner:banner:1.4.10\n\n"
+
+        "q.rorbin:VerticalTabLayout:1.2.7\n\n"
+
+        "com.just.agentweb:agentweb:4.0.2\n\n"
+
+        "com.android.support:multidex:1.0.3\n\n"
+
+        "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38\n\n"
+
+    </string>
 
 
 </resources>

@@ -20,6 +20,7 @@ import android.view.View;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
 import com.yechaoa.wanandroidclient.common.GlobalConstant;
+import com.yechaoa.wanandroidclient.module.about.AboutActivity;
 import com.yechaoa.wanandroidclient.module.collect.CollectActivity;
 import com.yechaoa.wanandroidclient.module.home.HomeFragment;
 import com.yechaoa.wanandroidclient.module.login.LoginActivity;
@@ -191,8 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this, CollectActivity.class));
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_about) {
+            startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

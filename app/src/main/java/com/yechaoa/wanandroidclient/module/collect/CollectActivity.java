@@ -3,6 +3,7 @@ package com.yechaoa.wanandroidclient.module.collect;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,6 +40,9 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
 
     @Override
     protected void initView() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         mCollectRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mCollectRecyclerView.setHasFixedSize(true);
         mCollectPresenter = new CollectPresenter(this);
@@ -154,6 +158,16 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
     @Override
     public void showUncollectError(String errorMessage) {
         ToastUtil.showToast(errorMessage);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -11,6 +11,7 @@
     <dimen name="font_16">16sp</dimen>
     <dimen name="font_18">18sp</dimen>
     <dimen name="font_20">20sp</dimen>
+    <dimen name="font_30">30sp</dimen>
 
     <dimen name="dp_5">5dp</dimen>
     <dimen name="dp_10">10dp</dimen>
@@ -21,5 +22,6 @@
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_80">80dp</dimen>
     <dimen name="dp_100">100dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
 
 </resources>

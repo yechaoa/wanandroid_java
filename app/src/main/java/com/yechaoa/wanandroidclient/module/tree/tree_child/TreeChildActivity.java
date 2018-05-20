@@ -2,6 +2,7 @@ package com.yechaoa.wanandroidclient.module.tree.tree_child;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
@@ -30,6 +31,8 @@ public class TreeChildActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         mTreeTabLayout.setupWithViewPager(mTreeViewPager);
     }
 
@@ -46,12 +49,21 @@ public class TreeChildActivity extends BaseActivity {
         CommonViewPagerAdapter commonViewPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
         //动态创建fragment
         for (int i = 0; i < titles.size(); i++) {
-            LogUtil.i("TreeChildActivity--" + childList.get(i).id);
             commonViewPagerAdapter.addFragment(TreeChildFragment.newInstance(childList.get(i).id));
         }
         mTreeViewPager.setAdapter(commonViewPagerAdapter);
         mTreeViewPager.setCurrentItem(0);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
