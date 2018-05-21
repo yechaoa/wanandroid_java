@@ -56,16 +56,16 @@ public class RegisterPresenter implements RegisterContract.IRegisterPresenter {
                     @Override
                     public void onError(Throwable e) {
                         mIRegisterView.hideProgress();
-                        mIRegisterView.showRegisterFailed("注册失败:" + e.getMessage());
+                        mIRegisterView.showRegisterFailed("注册失败(°∀°)ﾉ" + e.getMessage());
                     }
 
                     @Override
                     public void onNext(User user) {
                         if (-1 == user.errorCode)
-                            mIRegisterView.showRegisterFailed("注册失败:" + user.errorMsg);
+                            mIRegisterView.showRegisterFailed("注册失败(°∀°)ﾉ" + user.errorMsg);
                         else {
                             mIRegisterView.showProgress();
-                            mIRegisterView.showRegisterSuccess("注册成功");
+                            mIRegisterView.showRegisterSuccess("注册成功（￣▽￣）");
                             mIRegisterView.doSuccess(user);
                         }
                     }

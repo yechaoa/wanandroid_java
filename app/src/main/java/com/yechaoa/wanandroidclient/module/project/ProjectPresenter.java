@@ -56,7 +56,7 @@ public class ProjectPresenter implements ProjectContract.IProjectPresenter {
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mIProjectView.hideProgress();
-                        mIProjectView.showProjectError("加载失败");
+                        mIProjectView.showProjectError("加载失败(°∀°)ﾉ");
                     }
 
                     @Override

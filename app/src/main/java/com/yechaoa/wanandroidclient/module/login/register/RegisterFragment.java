@@ -101,9 +101,9 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.I
                     if (mPassword.equals(mRepassword))
                         mRegisterPresenter.submit(mUsername, mPassword, mRepassword);
                     else
-                        ToastUtil.showToast("两次密码不一样");
+                        ToastUtil.showToast("两次密码不一样( ⊙ o ⊙ ) ");
                 } else {
-                    ToastUtil.showToast("fail");
+                    ToastUtil.showToast("Failed (°∀°)ﾉ");
                 }
                 break;
         }

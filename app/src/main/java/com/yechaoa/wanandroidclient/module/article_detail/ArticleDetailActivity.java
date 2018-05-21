@@ -2,6 +2,8 @@ package com.yechaoa.wanandroidclient.module.article_detail;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import butterknife.BindView;
 public class ArticleDetailActivity extends BaseActivity {
 
     public static final String WEB_URL = "com.yechaoa.wanandroidclient.module.ArticleDetailActivity.WEB_URL";
+    public static final String WEB_TITLE = "com.yechaoa.wanandroidclient.module.ArticleDetailActivity.WEB_TITLE";
 
     @BindView(R.id.web_content)
     FrameLayout mWebContent;
@@ -33,8 +36,14 @@ public class ArticleDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        
+        if (null != getSupportActionBar()) {
+            String title = getIntent().getStringExtra(WEB_TITLE);
+            if (!TextUtils.isEmpty(title))
+                getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
 
         initAgentWeb();
     }

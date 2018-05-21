@@ -1,5 +1,7 @@
 package com.yechaoa.wanandroidclient.module.home;
 
+import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -103,6 +105,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
         if (0 != mBanners.size()) {
             Intent intent = new Intent(mContext, ArticleDetailActivity.class);
             intent.putExtra(ArticleDetailActivity.WEB_URL, mBanners.get(position).url);
+            intent.putExtra(ArticleDetailActivity.WEB_TITLE, mArticles.get(position).title);
             startActivity(intent);
         }
     }
@@ -142,7 +145,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
         if (0 != mArticles.size()) {
             Intent intent = new Intent(mContext, ArticleDetailActivity.class);
             intent.putExtra(ArticleDetailActivity.WEB_URL, mArticles.get(position).link);
+            intent.putExtra(ArticleDetailActivity.WEB_TITLE, mArticles.get(position).title);
             startActivity(intent);
+
+//            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,ArticleDetailActivity.WEB_TITLE).toBundle());
         }
     }
 

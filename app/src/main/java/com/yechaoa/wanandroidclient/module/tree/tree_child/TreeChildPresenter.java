@@ -57,7 +57,7 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mITreeChildView.hideProgress();
-                        mITreeChildView.showTreeChildError("加载失败");
+                        mITreeChildView.showTreeChildError("加载失败(°∀°)ﾉ");
                     }
 
                     @Override
@@ -84,7 +84,7 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
 
                     @Override
                     public void onError(Throwable e) {
-                        mITreeChildView.showCollectError("收藏失败" + e.toString());
+                        mITreeChildView.showCollectError("收藏失败(°∀°)ﾉ" + e.toString());
                     }
 
                     @Override
@@ -92,7 +92,7 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
                         if (-1 == common.errorCode)
                             mITreeChildView.showCollectError(common.errorMsg);
                         else
-                            mITreeChildView.showCollectSuccess("收藏成功");
+                            mITreeChildView.showCollectSuccess("收藏成功（￣▽￣）");
                     }
                 });
 
@@ -113,7 +113,7 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
 
                     @Override
                     public void onError(Throwable e) {
-                        mITreeChildView.showUncollectError("取消收藏失败" + e.toString());
+                        mITreeChildView.showUncollectError("取消收藏失败(°∀°)ﾉ" + e.toString());
                     }
 
                     @Override
@@ -121,7 +121,7 @@ public class TreeChildPresenter implements TreeChildContract.ITreeChildPresenter
                         if (-1 == common.errorCode)
                             mITreeChildView.showUncollectError(common.errorMsg);
                         else
-                            mITreeChildView.showUncollectSuccess("取消收藏成功");
+                            mITreeChildView.showUncollectSuccess("取消收藏成功（￣▽￣）");
                     }
                 });
     }

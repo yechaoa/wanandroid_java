@@ -56,16 +56,16 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
                     @Override
                     public void onError(Throwable e) {
                         mILoginView.hideProgress();
-                        mILoginView.showLoginFailed("登录失败:" + e.getMessage());
+                        mILoginView.showLoginFailed("登录失败(°∀°)ﾉ" + e.getMessage());
                     }
 
                     @Override
                     public void onNext(User user) {
                         if (-1 == user.errorCode)
-                            mILoginView.showLoginFailed("登录失败:" + user.errorMsg);
+                            mILoginView.showLoginFailed("登录失败(°∀°)ﾉ" + user.errorMsg);
                         else {
                             mILoginView.showProgress();
-                            mILoginView.showLoginSuccess("登录成功");
+                            mILoginView.showLoginSuccess("登录成功（￣▽￣）");
                             mILoginView.doSuccess(user);
                         }
                     }

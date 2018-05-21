@@ -96,7 +96,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.ILoginV
                 if (isUsernameValid() && isPasswordValid()) {
                     mLoginPresenter.submit(mUsername, mPassword);
                 } else {
-                    ToastUtil.showToast("fail");
+                    ToastUtil.showToast("Failed (°∀°)ﾉ");
                 }
                 break;
             case R.id.btn_register:

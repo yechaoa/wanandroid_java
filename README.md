@@ -45,6 +45,9 @@
 * [todoapp](https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp)
 * [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid)
 
+# 更新日志
+* 2018-05-21 添加标题、调整Toast显示
+
 
 <br>
 

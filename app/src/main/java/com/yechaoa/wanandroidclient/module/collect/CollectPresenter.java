@@ -57,7 +57,7 @@ public class CollectPresenter implements CollectContract.ICollectPresenter {
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mICollectView.hideProgress();
-                        mICollectView.showArticleError("加载失败");
+                        mICollectView.showArticleError("加载失败(°∀°)ﾉ");
                     }
 
                     @Override
@@ -93,7 +93,7 @@ public class CollectPresenter implements CollectContract.ICollectPresenter {
                     @Override
                     public void onError(Throwable e) {
                         mICollectView.hideProgress();
-                        mICollectView.showArticleErrorByMore("加载失败");
+                        mICollectView.showArticleErrorByMore("加载失败(°∀°)ﾉ");
                     }
 
                     @Override
@@ -120,7 +120,7 @@ public class CollectPresenter implements CollectContract.ICollectPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mICollectView.showUncollectError("取消收藏失败" + e.toString());
+                        mICollectView.showUncollectError("取消收藏失败(°∀°)ﾉ" + e.toString());
                     }
 
                     @Override
@@ -128,7 +128,7 @@ public class CollectPresenter implements CollectContract.ICollectPresenter {
                         if (-1 == common.errorCode)
                             mICollectView.showUncollectError(common.errorMsg);
                         else
-                            mICollectView.showUncollectSuccess("取消收藏成功");
+                            mICollectView.showUncollectSuccess("取消收藏成功（￣▽￣）");
                     }
                 });
 

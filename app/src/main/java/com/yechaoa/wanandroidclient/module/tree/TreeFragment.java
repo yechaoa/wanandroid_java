@@ -81,6 +81,7 @@ public class TreeFragment extends DelayFragment implements TreeContract.ITreeVie
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mContext, TreeChildActivity.class);
         intent.putExtra(TreeChildActivity.CID, (Serializable) mTreeList.get(position).children);
+        intent.putExtra(TreeChildActivity.TITLE, mTreeList.get(position).name);
         startActivity(intent);
     }
 

@@ -112,6 +112,7 @@ public class TreeChildFragment extends DelayFragment implements TreeChildContrac
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mContext, ArticleDetailActivity.class);
         intent.putExtra(ArticleDetailActivity.WEB_URL, mTCList.get(position).link);
+        intent.putExtra(ArticleDetailActivity.WEB_TITLE, mTCList.get(position).title);
         startActivity(intent);
     }
 

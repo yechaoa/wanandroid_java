@@ -82,11 +82,13 @@ public class AboutActivity extends AppCompatActivity {
             case R.id.tv_github:
                 intent = new Intent(this, ArticleDetailActivity.class);
                 intent.putExtra(ArticleDetailActivity.WEB_URL, getResources().getString(R.string.github_link));
+                intent.putExtra(ArticleDetailActivity.WEB_TITLE, getResources().getString(R.string.github_title));
                 startActivity(intent);
                 break;
             case R.id.tv_api:
                 intent = new Intent(this, ArticleDetailActivity.class);
                 intent.putExtra(ArticleDetailActivity.WEB_URL, getResources().getString(R.string.api_link));
+                intent.putExtra(ArticleDetailActivity.WEB_TITLE, getResources().getString(R.string.api_title));
                 startActivity(intent);
                 break;
         }

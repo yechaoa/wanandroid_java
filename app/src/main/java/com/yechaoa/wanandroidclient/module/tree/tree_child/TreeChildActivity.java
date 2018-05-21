@@ -2,13 +2,13 @@ package com.yechaoa.wanandroidclient.module.tree.tree_child;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
 import com.yechaoa.wanandroidclient.base.BaseActivity;
 import com.yechaoa.wanandroidclient.bean.Tree;
-import com.yechaoa.yutils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ import butterknife.BindView;
 public class TreeChildActivity extends BaseActivity {
 
     public static final String CID = "com.yechaoa.wanandroidclient.module.tree.TreeChildActivity.CID";
+    public static final String TITLE = "com.yechaoa.wanandroidclient.module.tree.TreeChildActivity.TITLE";
 
     @BindView(R.id.tree_tab_layout)
     TabLayout mTreeTabLayout;
@@ -31,8 +32,15 @@ public class TreeChildActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
+        if (null != getSupportActionBar()) {
+            String title = getIntent().getStringExtra(TITLE);
+            if (!TextUtils.isEmpty(title))
+                getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
         mTreeTabLayout.setupWithViewPager(mTreeViewPager);
     }
 

@@ -40,8 +40,11 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
 
     @Override
     protected void initView() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if(null != getSupportActionBar()){
+            getSupportActionBar().setTitle("我的收藏");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
 
         mCollectRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mCollectRecyclerView.setHasFixedSize(true);
@@ -90,6 +93,7 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
         if (0 != mArticles.size()) {
             Intent intent = new Intent(this, ArticleDetailActivity.class);
             intent.putExtra(ArticleDetailActivity.WEB_URL, mArticles.get(position).link);
+            intent.putExtra(ArticleDetailActivity.WEB_TITLE, mArticles.get(position).title);
             startActivity(intent);
         }
     }

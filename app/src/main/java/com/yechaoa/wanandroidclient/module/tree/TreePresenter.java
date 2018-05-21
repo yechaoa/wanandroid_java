@@ -56,7 +56,7 @@ public class TreePresenter implements TreeContract.ITreePresenter {
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mITreeView.hideProgress();
-                        mITreeView.showTreeError("加载失败");
+                        mITreeView.showTreeError("加载失败(°∀°)ﾉ");
                     }
 
                     @Override

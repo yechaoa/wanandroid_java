@@ -67,7 +67,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                     public void onError(Throwable e) {
                         LogUtil.i("onError");
                         mIHomeView.hideProgress();
-                        mIHomeView.showBannerError("加载失败");
+                        mIHomeView.showBannerError("加载失败(°∀°)ﾉ");
                     }
 
                     //普通事件（相当于 onClick() / onEvent()）
@@ -103,7 +103,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mIHomeView.hideProgress();
-                        mIHomeView.showArticleError("加载失败");
+                        mIHomeView.showArticleError("加载失败(°∀°)ﾉ");
                     }
 
                     //普通事件（相当于 onClick() / onEvent()）
@@ -137,7 +137,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                     @Override
                     public void onError(Throwable e) {
                         mIHomeView.hideProgress();
-                        mIHomeView.showArticleErrorByMore("加载失败");
+                        mIHomeView.showArticleErrorByMore("加载失败(°∀°)ﾉ");
                     }
 
                     @Override
@@ -169,7 +169,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mIHomeView.showCollectError("收藏失败" + e.toString());
+                        mIHomeView.showCollectError("收藏失败(°∀°)ﾉ" + e.toString());
                     }
 
                     @Override
@@ -177,7 +177,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                         if (-1 == common.errorCode)
                             mIHomeView.showCollectError(common.errorMsg);
                         else
-                            mIHomeView.showCollectSuccess("收藏成功");
+                            mIHomeView.showCollectSuccess("收藏成功（￣▽￣）");
                     }
                 });
 
@@ -203,7 +203,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mIHomeView.showUncollectError("取消收藏失败" + e.toString());
+                        mIHomeView.showUncollectError("取消收藏失败(°∀°)ﾉ" + e.toString());
                     }
 
                     @Override
@@ -211,7 +211,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
                         if (-1 == common.errorCode)
                             mIHomeView.showUncollectError(common.errorMsg);
                         else
-                            mIHomeView.showUncollectSuccess("取消收藏成功");
+                            mIHomeView.showUncollectSuccess("取消收藏成功（￣▽￣）");
                     }
                 });
     }

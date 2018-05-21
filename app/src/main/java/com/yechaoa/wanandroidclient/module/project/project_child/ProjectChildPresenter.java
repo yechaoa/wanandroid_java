@@ -56,7 +56,7 @@ public class ProjectChildPresenter implements ProjectChildContract.IProjectChild
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mIProjectChildView.hideProgress();
-                        mIProjectChildView.showProjectChildError("加载失败");
+                        mIProjectChildView.showProjectChildError("加载失败(°∀°)ﾉ");
                     }
 
                     @Override

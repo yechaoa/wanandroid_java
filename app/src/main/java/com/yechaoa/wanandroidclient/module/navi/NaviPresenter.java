@@ -58,7 +58,7 @@ public class NaviPresenter implements NaviContract.INaviPresenter {
                     public void onError(Throwable e) {
                         LogUtil.e(e.toString());
                         mINaviView.hideProgress();
-                        mINaviView.showNaviError("加载失败");
+                        mINaviView.showNaviError("加载失败(°∀°)ﾉ");
                     }
 
                     @Override
