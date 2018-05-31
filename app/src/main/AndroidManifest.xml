@@ -38,7 +38,8 @@
         <activity
             android:name=".module.about.AboutActivity"
             android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.search.SearchActivity"></activity>
     </application>
 
 </manifest>

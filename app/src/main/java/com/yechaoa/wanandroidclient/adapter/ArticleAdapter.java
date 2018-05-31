@@ -1,5 +1,6 @@
 package com.yechaoa.wanandroidclient.adapter;
 
+import android.text.Html;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +32,8 @@ public class ArticleAdapter extends BaseQuickAdapter<Article.DataBean.DataDetail
 
     @Override
     protected void convert(BaseViewHolder helper, Article.DataBean.DataDetailBean item) {
-        helper.setText(R.id.article_title, item.title);
+        //fromHtml，因为搜索结果中的title中含有html标签
+        helper.setText(R.id.article_title, Html.fromHtml(item.title));
         helper.setText(R.id.article_chapter, item.chapterName);
         helper.setText(R.id.article_author, item.author);
         helper.addOnClickListener(R.id.article_favorite);

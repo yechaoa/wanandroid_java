@@ -110,6 +110,14 @@ public class API {
         @POST("lg/uncollect/{id}/json")
         Observable<Common> uncollect1(@Path("id") Integer id,@Field("originId") Integer originId);
 
+
+        //-----------------------【  搜索  】----------------------
+
+        //搜索
+        @FormUrlEncoded
+        @POST("article/query/{page}/json?")
+        Observable<Article> search(@Path("page") Integer page,@Field("k") String k);
+
     }
 
 }
