@@ -5,6 +5,10 @@
 ![](https://img.shields.io/hexpm/l/plug.svg)
 ![](https://img.shields.io/badge/to%20be%20happy-%E5%BC%80%E5%BF%83%E5%B0%B1%E5%A5%BD-green.svg)
 
+* [玩安卓 Flutter版本](https://github.com/yechaoa/wanandroid_flutter)
+* [玩安卓 Java版本](https://github.com/yechaoa/WanAndroidClient)
+* [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
+
 <br>
 
 # MaterialDesign + Retrofit + RxJava + MVP
@@ -13,13 +17,12 @@
 * [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
 
 # APK
-<img src="pic/QRcode.png" width="350px"/>
+<img src="pic/QRcode.png" width="300px"/>
 
 # 截图
-<img src="pic/1.jpeg" width="350px"/> <img src="pic/2.jpeg" width="350px"/>
-<img src="pic/3.jpeg" width="350px"/> <img src="pic/4.jpeg" width="350px"/>
-<img src="pic/5.jpeg" width="350px"/> <img src="pic/6.jpeg" width="350px"/>
-<img src="pic/7.jpeg" width="350px"/> <img src="pic/8.jpeg" width="350px"/>
+<img src="pic/1.jpeg" width="280px"/> <img src="pic/2.jpeg" width="280px"/> <img src="pic/3.jpeg" width="280px"/>
+<img src="pic/4.jpeg" width="280px"/> <img src="pic/5.jpeg" width="280px"/> <img src="pic/6.jpeg" width="280px"/>
+<img src="pic/7.jpeg" width="280px"/> <img src="pic/8.jpeg" width="280px"/>
 
 # TODO
 * 功能完善，代码结构优化
