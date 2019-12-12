@@ -1,5 +1,5 @@
 # WanAndroidClient
-玩安卓客户端
+### 玩安卓客户端 MaterialDesign + Retrofit + RxJava + MVP
 
 ![](https://img.shields.io/badge/language-java-orange.svg)
 ![](https://img.shields.io/hexpm/l/plug.svg)
@@ -8,10 +8,6 @@
 * [玩安卓 Flutter版本](https://github.com/yechaoa/wanandroid_flutter)
 * [玩安卓 Java版本](https://github.com/yechaoa/WanAndroidClient)
 * [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
-
-<br>
-
-# MaterialDesign + Retrofit + RxJava + MVP
 
 # 接口
 * [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
