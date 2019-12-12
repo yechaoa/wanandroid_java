@@ -17,18 +17,13 @@
 * [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
 
 # APK
-<img src="pic/QRcode.png" width="300px"/>
+<img src="pic/QRcode.png" width="260px"/>
 
 # 截图
 <img src="pic/1.jpeg" width="280px"/> <img src="pic/2.jpeg" width="280px"/> <img src="pic/3.jpeg" width="280px"/>
 <img src="pic/4.jpeg" width="280px"/> <img src="pic/5.jpeg" width="280px"/> <img src="pic/6.jpeg" width="280px"/>
 <img src="pic/7.jpeg" width="280px"/> <img src="pic/8.jpeg" width="280px"/>
 
-# TODO
-* 功能完善，代码结构优化
-* 界面美化，加动画效果
-* 从产品角度进一步优化
-* 现阶段很糙，慢慢打磨
 
 # 感谢开源
 * [YUtils](https://github.com/yechaoa/YUtils)
