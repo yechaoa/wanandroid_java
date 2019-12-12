@@ -49,6 +49,7 @@
 * [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid)
 
 # 更新日志
+* 2019-12-12 迁移至androidx及库版本升级
 * 2018-05-21 添加标题、调整Toast显示
 * 2018-05-31 添加搜索功能
 
