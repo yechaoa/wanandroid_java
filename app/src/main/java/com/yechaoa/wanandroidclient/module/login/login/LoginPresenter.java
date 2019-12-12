@@ -1,13 +1,9 @@
 package com.yechaoa.wanandroidclient.module.login.login;
 
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseObserver;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.bean.User;
-import com.yechaoa.wanandroidclient.http.API;
-import com.yechaoa.wanandroidclient.http.RetrofitService;
-
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -16,59 +12,25 @@ import rx.schedulers.Schedulers;
  * Created by yechao on 2018/5/6.
  * Describe :
  */
-public class LoginPresenter implements LoginContract.ILoginPresenter {
+class LoginPresenter extends BasePresenter<ILoginView> {
 
-    private Subscription mSubscription = null;
-    private LoginContract.ILoginView mILoginView;
-
-    LoginPresenter(LoginContract.ILoginView loginView) {
-        mILoginView = loginView;
+    LoginPresenter(ILoginView baseView) {
+        super(baseView);
     }
 
-    @Override
-    public void subscribe() {
+    void submit(String username, String password) {
 
-    }
+        addDisposable(apiServer.login(username, password), new BaseObserver<BaseBean<User>>(baseView) {
+            @Override
+            public void onSuccess(BaseBean<User> bean) {
+                baseView.showLoginSuccess("登录成功（￣▽￣）");
+                baseView.doSuccess(bean);
+            }
 
-    @Override
-    public void unSubscribe() {
-        if (null != mSubscription && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-        }
-    }
-
-    @Override
-    public void submit(String username, String password) {
-
-        mILoginView.showLoginLoading();
-
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .login(username, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<User>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mILoginView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mILoginView.hideProgress();
-                        mILoginView.showLoginFailed("登录失败(°∀°)ﾉ" + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(User user) {
-                        if (-1 == user.errorCode)
-                            mILoginView.showLoginFailed("登录失败(°∀°)ﾉ" + user.errorMsg);
-                        else {
-                            mILoginView.showProgress();
-                            mILoginView.showLoginSuccess("登录成功（￣▽￣）");
-                            mILoginView.doSuccess(user);
-                        }
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showLoginFailed(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 }

@@ -1,14 +1,11 @@
 package com.yechaoa.wanandroidclient.module.tree;
 
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseObserver;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.bean.Tree;
-import com.yechaoa.wanandroidclient.http.API;
-import com.yechaoa.wanandroidclient.http.RetrofitService;
-import com.yechaoa.yutils.LogUtil;
 
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.List;
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -17,54 +14,24 @@ import rx.schedulers.Schedulers;
  * Created by yechao on 2018/4/25.
  * Describe :
  */
-public class TreePresenter implements TreeContract.ITreePresenter {
+public class TreePresenter extends BasePresenter<ITreeView> {
 
-    private Subscription mSubscription = null;
-    private TreeContract.ITreeView mITreeView;
-
-    TreePresenter(TreeContract.ITreeView treeView) {
-        mITreeView = treeView;
+    TreePresenter(ITreeView treeView) {
+        super(treeView);
     }
 
-    @Override
-    public void subscribe() {
-        getTreeList();
-    }
-
-    @Override
-    public void unSubscribe() {
-        if (null != mSubscription && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-        }
-    }
-
-    @Override
     public void getTreeList() {
+        addDisposable(apiServer.getTreeList(), new BaseObserver<BaseBean<List<Tree>>>(baseView) {
+            @Override
+            public void onSuccess(BaseBean<List<Tree>> bean) {
+                baseView.setTreeData(bean);
+            }
 
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .getTreeList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Tree>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mITreeView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.e(e.toString());
-                        mITreeView.hideProgress();
-                        mITreeView.showTreeError("加载失败(°∀°)ﾉ");
-                    }
-
-                    @Override
-                    public void onNext(Tree tree) {
-                        mITreeView.showProgress();
-                        mITreeView.setTreeData(tree.data);
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showTreeError(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
 }

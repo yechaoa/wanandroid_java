@@ -1,8 +1,6 @@
 package com.yechaoa.wanandroidclient.module.collect;
 
 import android.content.Intent;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -10,28 +8,34 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.ArticleAdapter;
 import com.yechaoa.wanandroidclient.base.BaseActivity;
+import com.yechaoa.wanandroidclient.base.BaseBean;
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.ToastUtil;
-import com.yechaoa.yutils.YUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class CollectActivity extends BaseActivity implements CollectContract.ICollectView, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class CollectActivity extends BaseActivity<CollectPresenter> implements ICollectView, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.collect_recycler_view)
     RecyclerView mCollectRecyclerView;
 
-    private CollectPresenter mCollectPresenter = null;
-    private List<Article.DataBean.DataDetailBean> mArticles = new ArrayList<>();
+    private List<Article.DataDetailBean> mArticles = new ArrayList<>();
     private ArticleAdapter mArticleAdapter;
     private int mCurrentCounter;//上一次加载的数量
     private int TOTAL_COUNTER = 20;//每一次加载的数量
     private int page = 0;//记录分页
     private int mPosition;
+
+    @Override
+    protected CollectPresenter createPresenter() {
+        return new CollectPresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -40,7 +44,7 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
 
     @Override
     protected void initView() {
-        if(null != getSupportActionBar()){
+        if (null != getSupportActionBar()) {
             getSupportActionBar().setTitle("我的收藏");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -48,44 +52,11 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
 
         mCollectRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mCollectRecyclerView.setHasFixedSize(true);
-        mCollectPresenter = new CollectPresenter(this);
     }
 
     @Override
     protected void initData() {
-        mCollectPresenter.subscribe();
-    }
-
-    @Override
-    public void showProgress() {
-        YUtils.showLoading(this, getResources().getString(R.string.loading));
-    }
-
-    @Override
-    public void hideProgress() {
-        YUtils.dismissLoading();
-    }
-
-    @Override
-    public void setArticleData(List<Article.DataBean.DataDetailBean> list) {
-        mArticles = list;
-        if (list.size() == 0) {
-            //空数据的情况下才显示setEmptyView，且RecyclerView要match_parent才显示全
-            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, new ArrayList<Article.DataBean.DataDetailBean>());
-            mCollectRecyclerView.setAdapter(mArticleAdapter);
-            View view = getLayoutInflater().inflate(R.layout.layout_empty, mCollectRecyclerView, false);
-            mArticleAdapter.setEmptyView(view);
-        } else {
-            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, list);
-            mCollectRecyclerView.setAdapter(mArticleAdapter);
-            mArticleAdapter.setType(true);
-            mCurrentCounter = mArticles.size();
-            mArticleAdapter.openLoadAnimation();
-            mArticleAdapter.setOnItemClickListener(this);
-            mArticleAdapter.setOnItemChildClickListener(this);
-            mArticleAdapter.setOnLoadMoreListener(this, mCollectRecyclerView);
-        }
-
+        presenter.getArticleList();
     }
 
     @Override
@@ -100,34 +71,48 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        switch (view.getId()) {
-            case R.id.article_favorite:
-                mPosition = position;
-                if (-1 < mArticles.get(position).originId)
-                    mCollectPresenter.uncollect(mArticles.get(position).id, mArticles.get(position).originId);
-                else
-                    mCollectPresenter.uncollect(mArticles.get(position).id, -1);
-                break;
+        if (view.getId() == R.id.article_favorite) {
+            mPosition = position;
+            if (-1 < mArticles.get(position).originId)
+                presenter.uncollect(mArticles.get(position).id, mArticles.get(position).originId);
+            else
+                presenter.uncollect(mArticles.get(position).id, -1);
         }
     }
 
     @Override
     public void onLoadMoreRequested() {
-        mCollectRecyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mCurrentCounter < TOTAL_COUNTER) {
-                    //Data are all loaded.
-                    mArticleAdapter.loadMoreEnd();
-                } else {
-                    page++;
-                    mCollectPresenter.getArticleListByMore(page);
-                }
+        mCollectRecyclerView.postDelayed(() -> {
+            if (mCurrentCounter < TOTAL_COUNTER) {
+                //Data are all loaded.
+                mArticleAdapter.loadMoreEnd();
+            } else {
+                page++;
+                presenter.getArticleListByMore(page);
             }
-
         }, 1000);
     }
 
+    @Override
+    public void setArticleData(BaseBean<Article> list) {
+        mArticles = list.data.datas;
+        if (list.data.datas.size() == 0) {
+            //空数据的情况下才显示setEmptyView，且RecyclerView要match_parent才显示全
+            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, new ArrayList<Article.DataDetailBean>());
+            mCollectRecyclerView.setAdapter(mArticleAdapter);
+            View view = getLayoutInflater().inflate(R.layout.layout_empty, mCollectRecyclerView, false);
+            mArticleAdapter.setEmptyView(view);
+        } else {
+            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, list.data.datas);
+            mCollectRecyclerView.setAdapter(mArticleAdapter);
+            mArticleAdapter.setType(true);
+            mCurrentCounter = mArticles.size();
+            mArticleAdapter.openLoadAnimation();
+            mArticleAdapter.setOnItemClickListener(this);
+            mArticleAdapter.setOnItemChildClickListener(this);
+            mArticleAdapter.setOnLoadMoreListener(this, mCollectRecyclerView);
+        }
+    }
 
     @Override
     public void showArticleError(String errorMessage) {
@@ -135,10 +120,10 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
     }
 
     @Override
-    public void setArticleDataByMore(List<Article.DataBean.DataDetailBean> list) {
-        mArticles.addAll(list);
-        mCurrentCounter = list.size();
-        mArticleAdapter.addData(list);
+    public void setArticleDataByMore(BaseBean<Article> list) {
+        mArticles.addAll(list.data.datas);
+        mCurrentCounter = list.data.datas.size();
+        mArticleAdapter.addData(list.data.datas);
         //加载完成
         mArticleAdapter.loadMoreComplete();
     }
@@ -156,7 +141,7 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
         mArticleAdapter.remove(mPosition);
         mArticleAdapter.notifyDataSetChanged();
         if (mArticles.size() == 0)
-            mCollectPresenter.getArticleList();
+            presenter.getArticleList();
     }
 
     @Override
@@ -172,14 +157,6 @@ public class CollectActivity extends BaseActivity implements CollectContract.ICo
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (null != mCollectPresenter) {
-            mCollectPresenter.unSubscribe();
-        }
     }
 
 }

@@ -1,4 +1,6 @@
-package com.yechaoa.wanandroidclient.bean;
+package com.yechaoa.wanandroidclient.base;
+
+import java.io.Serializable;
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -7,7 +9,13 @@ package com.yechaoa.wanandroidclient.bean;
  * Created by yechao on 2018/5/17.
  * Describe :
  */
-public class Common {
+public class BaseBean<T> implements Serializable {
+
+    public BaseBean(int code, String data) {
+        this.errorCode = code;
+        this.data = (T) data;
+    }
+
     /**
      * data :
      * errorCode : 0
@@ -16,6 +24,8 @@ public class Common {
 
     public int errorCode;
     public String errorMsg;
-//    public Object data;
+    public T data;
+
+
 
 }

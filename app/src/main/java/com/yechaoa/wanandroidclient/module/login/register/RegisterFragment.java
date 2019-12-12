@@ -1,8 +1,6 @@
 package com.yechaoa.wanandroidclient.module.login.register;
 
 import android.os.Handler;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.fragment.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,16 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.yechaoa.wanandroidclient.R;
+import com.yechaoa.wanandroidclient.base.BaseBean;
 import com.yechaoa.wanandroidclient.base.BaseFragment;
 import com.yechaoa.wanandroidclient.bean.User;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterContract.IRegisterView {
+public class RegisterFragment extends BaseFragment<RegisterPresenter> implements IRegisterView {
 
     @BindView(R.id.til_username)
     TextInputLayout mTilUsername;
@@ -36,8 +37,12 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.I
     @BindView(R.id.til_repassword)
     TextInputLayout mTilRepassword;
 
-    private RegisterPresenter mRegisterPresenter = null;
     private String mUsername, mPassword, mRepassword;
+
+    @Override
+    protected RegisterPresenter createPresenter() {
+        return new RegisterPresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -53,7 +58,6 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.I
 
     @Override
     protected void initData() {
-        mRegisterPresenter = new RegisterPresenter(this);
     }
 
     private TextWatcher mTextWatcher = new TextWatcher() {
@@ -94,18 +98,17 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.I
 
     @OnClick({R.id.btn_register})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_register:
-                YUtils.closeSoftKeyboard();
-                if (isUsernameValid() && isPasswordValid() && isRepasswordValid()) {
-                    if (mPassword.equals(mRepassword))
-                        mRegisterPresenter.submit(mUsername, mPassword, mRepassword);
-                    else
-                        ToastUtil.showToast("两次密码不一样( ⊙ o ⊙ ) ");
-                } else {
-                    ToastUtil.showToast("Failed (°∀°)ﾉ");
-                }
-                break;
+        if (view.getId() == R.id.btn_register) {
+            YUtils.closeSoftKeyboard();
+            if (isUsernameValid() && isPasswordValid() && isRepasswordValid()) {
+                if (mPassword.equals(mRepassword)) {
+                    showLoading();
+                    presenter.submit(mUsername, mPassword, mRepassword);
+                } else
+                    ToastUtil.showToast("两次密码不一样( ⊙ o ⊙ ) ");
+            } else {
+                ToastUtil.showToast("Failed (°∀°)ﾉ");
+            }
         }
     }
 
@@ -125,53 +128,25 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.I
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void showRegisterLoading() {
-        YUtils.showLoading(getActivity(), getResources().getString(R.string.loading));
-    }
-
-    @Override
     public void showRegisterSuccess(String successMessage) {
-        YUtils.dismissLoading();
+        hideLoading();
         ToastUtil.showToast(successMessage);
     }
 
     @Override
     public void showRegisterFailed(String errorMessage) {
-        YUtils.dismissLoading();
+        hideLoading();
         ToastUtil.showToast(errorMessage);
     }
 
     @Override
-    public void doSuccess(User user) {
-        if (-1 != user.errorCode) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.show(getActivity().getSupportFragmentManager().findFragmentByTag("login"));
-                    fragmentTransaction.hide(getActivity().getSupportFragmentManager().findFragmentByTag("register"));
-                    fragmentTransaction.commit();
-                }
-            }, 1500);
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (null != mRegisterPresenter) {
-            mRegisterPresenter.unSubscribe();
-        }
+    public void doSuccess(BaseBean<User> user) {
+        new Handler().postDelayed(() -> {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.show(getActivity().getSupportFragmentManager().findFragmentByTag("login"));
+            fragmentTransaction.hide(getActivity().getSupportFragmentManager().findFragmentByTag("register"));
+            fragmentTransaction.commit();
+        }, 1500);
     }
 
 }

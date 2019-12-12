@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.base.BaseActivity;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.common.GlobalConstant;
 import com.yechaoa.wanandroidclient.module.MainActivity;
 import com.yechaoa.wanandroidclient.module.login.login.LoginFragment;
@@ -17,6 +18,11 @@ import com.yechaoa.yutils.SpUtil;
 public class LoginActivity extends BaseActivity {
 
     private FragmentManager mFragmentManager;
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -77,10 +83,5 @@ public class LoginActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
 }
 

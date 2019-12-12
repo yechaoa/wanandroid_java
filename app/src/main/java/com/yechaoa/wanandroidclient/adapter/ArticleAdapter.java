@@ -18,7 +18,7 @@ import java.util.List;
  * Created by yechao on 2018/4/22.
  * Describe :
  */
-public class ArticleAdapter extends BaseQuickAdapter<Article.DataBean.DataDetailBean, BaseViewHolder> {
+public class ArticleAdapter extends BaseQuickAdapter<Article.DataDetailBean, BaseViewHolder> {
 
     public ArticleAdapter(int layoutResId, List data) {
         super(layoutResId, data);
@@ -31,7 +31,7 @@ public class ArticleAdapter extends BaseQuickAdapter<Article.DataBean.DataDetail
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Article.DataBean.DataDetailBean item) {
+    protected void convert(BaseViewHolder helper, Article.DataDetailBean item) {
         //fromHtml，因为搜索结果中的title中含有html标签
         helper.setText(R.id.article_title, Html.fromHtml(item.title));
         helper.setText(R.id.article_chapter, item.chapterName);

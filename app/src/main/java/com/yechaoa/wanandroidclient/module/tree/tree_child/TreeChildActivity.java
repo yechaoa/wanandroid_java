@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
 import com.yechaoa.wanandroidclient.base.BaseActivity;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.bean.Tree;
 
 import java.util.ArrayList;
@@ -24,6 +25,11 @@ public class TreeChildActivity extends BaseActivity {
     TabLayout mTreeTabLayout;
     @BindView(R.id.tree_view_pager)
     ViewPager mTreeViewPager;
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -47,7 +53,7 @@ public class TreeChildActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-        List<Tree.DataBean.ChildrenBean> childList = (List<Tree.DataBean.ChildrenBean>) getIntent().getSerializableExtra(CID);
+        List<Tree.ChildrenBean> childList = (List<Tree.ChildrenBean>) getIntent().getSerializableExtra(CID);
 
         //获取title的数据集
         ArrayList<String> titles = new ArrayList<>();

@@ -1,14 +1,11 @@
 package com.yechaoa.wanandroidclient.module.project;
 
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseObserver;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.bean.Project;
-import com.yechaoa.wanandroidclient.http.API;
-import com.yechaoa.wanandroidclient.http.RetrofitService;
-import com.yechaoa.yutils.LogUtil;
 
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.List;
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -17,54 +14,24 @@ import rx.schedulers.Schedulers;
  * Created by yechao on 2018/4/27.
  * Describe :
  */
-public class ProjectPresenter implements ProjectContract.IProjectPresenter {
+public class ProjectPresenter extends BasePresenter<IProjectView> {
 
-    private Subscription mSubscription = null;
-    private ProjectContract.IProjectView mIProjectView;
-
-    ProjectPresenter(ProjectContract.IProjectView projectView) {
-        mIProjectView = projectView;
+    ProjectPresenter(IProjectView projectView) {
+        super(projectView);
     }
 
-    @Override
-    public void subscribe() {
-        getProjectList();
-    }
-
-    @Override
-    public void unSubscribe() {
-        if (null != mSubscription && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-        }
-    }
-
-    @Override
     public void getProjectList() {
+        addDisposable(apiServer.getProjectList(), new BaseObserver<BaseBean<List<Project>>>(baseView) {
+            @Override
+            public void onSuccess(BaseBean<List<Project>> bean) {
+                baseView.setProjectData(bean);
+            }
 
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .getProjectList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Project>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mIProjectView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.e(e.toString());
-                        mIProjectView.hideProgress();
-                        mIProjectView.showProjectError("加载失败(°∀°)ﾉ");
-                    }
-
-                    @Override
-                    public void onNext(Project project) {
-                        mIProjectView.showProgress();
-                        mIProjectView.setProjectData(project.data);
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showProjectError(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
 }

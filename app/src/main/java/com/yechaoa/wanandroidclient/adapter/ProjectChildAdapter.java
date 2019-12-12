@@ -17,14 +17,14 @@ import java.util.List;
  * Created by yechao on 2018/4/27.
  * Describe :
  */
-public class ProjectChildAdapter extends BaseQuickAdapter<ProjectChild.DataBean.DatasBean, BaseViewHolder> {
+public class ProjectChildAdapter extends BaseQuickAdapter<ProjectChild.DatasBean, BaseViewHolder> {
 
     public ProjectChildAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ProjectChild.DataBean.DatasBean item) {
+    protected void convert(BaseViewHolder helper, ProjectChild.DatasBean item) {
         if(item.envelopePic.endsWith(".gif"))
             Glide.with(mContext).asGif().load(item.envelopePic).into((ImageView) helper.getView(R.id.item_project_child_pic));
         else

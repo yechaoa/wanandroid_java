@@ -1,15 +1,9 @@
 package com.yechaoa.wanandroidclient.module.search;
 
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseObserver;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.bean.Article;
-import com.yechaoa.wanandroidclient.bean.Common;
-import com.yechaoa.wanandroidclient.http.API;
-import com.yechaoa.wanandroidclient.http.RetrofitService;
-import com.yechaoa.yutils.LogUtil;
-
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -18,143 +12,67 @@ import rx.schedulers.Schedulers;
  * Created by yechao on 2018/5/31.
  * Describe :
  */
-public class SearchPresenter implements SearchContract.ISearchPresenter {
+public class SearchPresenter extends BasePresenter<ISearchView> {
 
-    private Subscription mSubscription = null;
-    private SearchContract.ISearchView mISearchView;
 
-    SearchPresenter(SearchContract.ISearchView searchView) {
-        mISearchView = searchView;
+    SearchPresenter(ISearchView searchView) {
+        super(searchView);
     }
 
-    @Override
-    public void subscribe() {
-        // getArticleList();
-    }
-
-    @Override
-    public void unSubscribe() {
-        if (null != mSubscription && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-        }
-    }
-
-    @Override
     public void getSearchArticleList(String key) {
+        addDisposable(apiServer.search(0, key), new BaseObserver<BaseBean<Article>>(baseView) {
+            @Override
+            public void onSuccess(BaseBean<Article> bean) {
+                baseView.setArticleData(bean);
+            }
 
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .search(0, key)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Article>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mISearchView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.e(e.toString());
-                        mISearchView.hideProgress();
-                        mISearchView.showArticleError("加载失败(°∀°)ﾉ");
-                    }
-
-                    @Override
-                    public void onNext(Article article) {
-                        mISearchView.showProgress();
-                        if (-1 == article.errorCode)
-                            mISearchView.showArticleError(article.errorMsg);
-                        else
-                            mISearchView.setArticleData(article.data.datas);
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showArticleError(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
-    @Override
     public void getSearchArticleListByMore(int page, String key) {
+        addDisposable(apiServer.search(page, key), new BaseObserver<BaseBean<Article>>(baseView) {
+            @Override
+            public void onSuccess(BaseBean<Article> bean) {
+                baseView.setArticleDataByMore(bean);
+            }
 
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .search(page, key)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Article>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mISearchView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mISearchView.hideProgress();
-                        mISearchView.showArticleErrorByMore("加载失败(°∀°)ﾉ");
-                    }
-
-                    @Override
-                    public void onNext(Article article) {
-                        mISearchView.showProgress();
-                        mISearchView.setArticleDataByMore(article.data.datas);
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showArticleErrorByMore(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
-    @Override
     public void collect(int id) {
+        addDisposable(apiServer.collectIn(id), new BaseObserver<BaseBean>(baseView) {
+            @Override
+            public void onSuccess(BaseBean bean) {
+                baseView.showCollectSuccess("收藏成功（￣▽￣）");
+            }
 
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .collectIn(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Common>() {
-
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mISearchView.showCollectError("收藏失败(°∀°)ﾉ" + e.toString());
-                    }
-
-                    @Override
-                    public void onNext(Common common) {
-                        if (-1 == common.errorCode)
-                            mISearchView.showCollectError(common.errorMsg);
-                        else
-                            mISearchView.showCollectSuccess("收藏成功（￣▽￣）");
-                    }
-                });
-
+            @Override
+            public void onError(String msg) {
+                baseView.showCollectError(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
-    @Override
     public void uncollect(int id) {
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .uncollect(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Common>() {
+        addDisposable(apiServer.uncollect(id), new BaseObserver<BaseBean>(baseView) {
+            @Override
+            public void onSuccess(BaseBean bean) {
+                baseView.showUncollectSuccess("取消收藏成功（￣▽￣）");
+            }
 
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mISearchView.showUncollectError("取消收藏失败(°∀°)ﾉ" + e.toString());
-                    }
-
-                    @Override
-                    public void onNext(Common common) {
-                        if (-1 == common.errorCode)
-                            mISearchView.showUncollectError(common.errorMsg);
-                        else
-                            mISearchView.showUncollectSuccess("取消收藏成功（￣▽￣）");
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showUncollectError(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
 }

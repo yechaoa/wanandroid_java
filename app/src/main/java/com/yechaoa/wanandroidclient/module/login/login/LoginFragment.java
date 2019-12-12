@@ -1,8 +1,6 @@
 package com.yechaoa.wanandroidclient.module.login.login;
 
 import android.content.Intent;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.fragment.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.yechaoa.wanandroidclient.R;
+import com.yechaoa.wanandroidclient.base.BaseBean;
 import com.yechaoa.wanandroidclient.base.BaseFragment;
 import com.yechaoa.wanandroidclient.bean.User;
 import com.yechaoa.wanandroidclient.common.GlobalConstant;
@@ -21,10 +21,11 @@ import com.yechaoa.yutils.SpUtil;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
 
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginFragment extends BaseFragment implements LoginContract.ILoginView {
+public class LoginFragment extends BaseFragment<LoginPresenter> implements ILoginView {
 
     @BindView(R.id.til_username)
     TextInputLayout mTilUsername;
@@ -39,9 +40,13 @@ public class LoginFragment extends BaseFragment implements LoginContract.ILoginV
     @BindView(R.id.btn_register)
     Button mBtnRegister;
 
-    private LoginPresenter mLoginPresenter = null;
     private String mUsername;
     private String mPassword;
+
+    @Override
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -56,7 +61,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.ILoginV
 
     @Override
     protected void initData() {
-        mLoginPresenter = new LoginPresenter(this);
     }
 
     private TextWatcher mTextWatcher = new TextWatcher() {
@@ -94,7 +98,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.ILoginV
             case R.id.btn_login:
                 YUtils.closeSoftKeyboard();
                 if (isUsernameValid() && isPasswordValid()) {
-                    mLoginPresenter.submit(mUsername, mPassword);
+                    showLoading();
+                    presenter.submit(mUsername, mPassword);
                 } else {
                     ToastUtil.showToast("Failed (°∀°)ﾉ");
                 }
@@ -120,50 +125,25 @@ public class LoginFragment extends BaseFragment implements LoginContract.ILoginV
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void showLoginLoading() {
-        YUtils.showLoading(getActivity(), getResources().getString(R.string.loading));
-    }
-
-    @Override
     public void showLoginSuccess(String successMessage) {
-        YUtils.dismissLoading();
+        hideLoading();
         ToastUtil.showToast(successMessage);
     }
 
     @Override
     public void showLoginFailed(String errorMessage) {
-        YUtils.dismissLoading();
+        hideLoading();
         ToastUtil.showToast(errorMessage);
     }
 
     @Override
-    public void doSuccess(User user) {
-        if (-1 != user.errorCode) {
+    public void doSuccess(BaseBean<User> user) {
+        SpUtil.setBoolean(GlobalConstant.IS_LOGIN, true);
+        SpUtil.setString(GlobalConstant.USERNAME, user.data.username);
+        SpUtil.setString(GlobalConstant.USERNAME, user.data.password);
 
-            SpUtil.setBoolean(GlobalConstant.IS_LOGIN, true);
-            SpUtil.setString(GlobalConstant.USERNAME, user.data.username);
-            SpUtil.setString(GlobalConstant.USERNAME, user.data.password);
-
-            startActivity(new Intent(mContext, MainActivity.class));
-            getActivity().finish();
-        }
+        startActivity(new Intent(mContext, MainActivity.class));
+        getActivity().finish();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (null != mLoginPresenter) {
-            mLoginPresenter.unSubscribe();
-        }
-    }
 }

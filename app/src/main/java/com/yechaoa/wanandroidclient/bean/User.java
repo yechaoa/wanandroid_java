@@ -12,30 +12,22 @@ import java.util.List;
 public class User {
 
     /**
-     * data : {"collectIds":[],"email":"","icon":"","id":3,"password":"111111","type":0,"username":"111111"}
+     * collectIds : []
+     * email :
+     * icon :
+     * id : 3
+     * password : 111111
+     * type : 0
+     * username : 111111
      */
-    public DataBean data;
-    public int errorCode;
-    public String errorMsg;
 
-    public static class DataBean {
-        /**
-         * collectIds : []
-         * email :
-         * icon :
-         * id : 3
-         * password : 111111
-         * type : 0
-         * username : 111111
-         */
+    public String email;
+    public String icon;
+    public int id;
+    public String password;
+    public int type;
+    public String username;
+    public List<?> collectIds;
+    public String repassword;
 
-        public String email;
-        public String icon;
-        public int id;
-        public String password;
-        public int type;
-        public String username;
-        public List<?> collectIds;
-        public String repassword;
-    }
 }

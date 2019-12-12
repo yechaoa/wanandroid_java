@@ -15,14 +15,14 @@ import java.util.List;
  * Created by yechao on 2018/4/26.
  * Describe :
  */
-public class NaviChildAdapter extends BaseQuickAdapter<Navi.DataBean.ArticlesBean, BaseViewHolder> {
+public class NaviChildAdapter extends BaseQuickAdapter<Navi.ArticlesBean, BaseViewHolder> {
 
     public NaviChildAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Navi.DataBean.ArticlesBean item) {
+    protected void convert(BaseViewHolder helper, Navi.ArticlesBean item) {
         helper.setText(R.id.navi_name, item.title);
     }
 }

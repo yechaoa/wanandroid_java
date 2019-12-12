@@ -1,73 +1,54 @@
 package com.yechaoa.wanandroidclient.module.tree;
 
 import android.content.Intent;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.TreeAdapter;
-import com.yechaoa.wanandroidclient.base.DelayFragment;
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseFragment;
 import com.yechaoa.wanandroidclient.bean.Tree;
 import com.yechaoa.wanandroidclient.module.tree.tree_child.TreeChildActivity;
 import com.yechaoa.yutils.ToastUtil;
-import com.yechaoa.yutils.YUtils;
 
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class TreeFragment extends DelayFragment implements TreeContract.ITreeView, BaseQuickAdapter.OnItemClickListener {
+public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeView, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.tree_recycler_view)
     RecyclerView mTreeRecyclerView;
-    private TreePresenter mTreePresenter;
-    private List<Tree.DataBean> mTreeList;
+    private List<Tree> mTreeList;
+
+    @Override
+    protected TreePresenter createPresenter() {
+        return new TreePresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
-        isReady = true;
-        delayLoad();
         return R.layout.fragment_tree;
     }
 
     @Override
     protected void initView() {
         mTreeRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mTreePresenter = new TreePresenter(this);
     }
 
     @Override
     protected void initData() {
-
-    }
-
-    private boolean isReady = false;
-
-    @Override
-    protected void delayLoad() {
-        if (!isReady || !isVisible) {
-            return;
-        }
-        mTreePresenter.subscribe();
+        presenter.getTreeList();
     }
 
     @Override
-    public void showProgress() {
-        YUtils.showLoading(getActivity(), getResources().getString(R.string.loading));
-    }
-
-    @Override
-    public void hideProgress() {
-        YUtils.dismissLoading();
-    }
-
-    @Override
-    public void setTreeData(List<Tree.DataBean> list) {
-        mTreeList = list;
-        TreeAdapter treeAdapter = new TreeAdapter(R.layout.item_tree_list, list);
+    public void setTreeData(BaseBean<List<Tree>> list) {
+        mTreeList = list.data;
+        TreeAdapter treeAdapter = new TreeAdapter(R.layout.item_tree_list, list.data);
         mTreeRecyclerView.setAdapter(treeAdapter);
         treeAdapter.setOnItemClickListener(this);
     }
@@ -83,13 +64,5 @@ public class TreeFragment extends DelayFragment implements TreeContract.ITreeVie
         intent.putExtra(TreeChildActivity.CID, (Serializable) mTreeList.get(position).children);
         intent.putExtra(TreeChildActivity.TITLE, mTreeList.get(position).name);
         startActivity(intent);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (null != mTreePresenter) {
-            mTreePresenter.unSubscribe();
-        }
     }
 }

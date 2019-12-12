@@ -1,10 +1,6 @@
 package com.yechaoa.wanandroidclient.module.search;
 
 import android.content.Intent;
-import androidx.core.view.MenuItemCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,24 +10,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.ArticleAdapter;
 import com.yechaoa.wanandroidclient.base.BaseActivity;
+import com.yechaoa.wanandroidclient.base.BaseBean;
 import com.yechaoa.wanandroidclient.bean.Article;
 import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.ToastUtil;
-import com.yechaoa.yutils.YUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class SearchActivity extends BaseActivity implements SearchContract.ISearchView, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class SearchActivity extends BaseActivity<SearchPresenter> implements ISearchView, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.search_recycler_view)
     RecyclerView mSearchRecyclerView;
 
-    private SearchPresenter mSearchPresenter = null;
-    private List<Article.DataBean.DataDetailBean> mArticles = new ArrayList<>();
+    private List<Article.DataDetailBean> mArticles = new ArrayList<>();
     private ArticleAdapter mArticleAdapter;
     private int mCurrentCounter;//上一次加载的数量
     private int TOTAL_COUNTER = 20;//每一次加载的数量
@@ -39,6 +38,11 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
     private int mPosition;
     private String key = "";
     private SearchView mSearchView;
+
+    @Override
+    protected SearchPresenter createPresenter() {
+        return new SearchPresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -57,8 +61,6 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
     protected void initData() {
         mSearchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSearchRecyclerView.setHasFixedSize(true);
-        mSearchPresenter = new SearchPresenter(this);
-        mSearchPresenter.subscribe();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
             @Override
             public boolean onQueryTextSubmit(String query) {
                 key = query;
-                mSearchPresenter.getSearchArticleList(key);
+                presenter.getSearchArticleList(key);
                 return false;
             }
 
@@ -113,41 +115,6 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
     }
 
     @Override
-    public void showProgress() {
-        YUtils.showLoading(this, getResources().getString(R.string.loading));
-    }
-
-    @Override
-    public void hideProgress() {
-        YUtils.dismissLoading();
-    }
-
-    @Override
-    public void setArticleData(List<Article.DataBean.DataDetailBean> list) {
-        if (list.size() == 0) {
-            //空数据的情况下才显示setEmptyView，且RecyclerView要match_parent才显示全
-            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, new ArrayList<Article.DataBean.DataDetailBean>());
-            mSearchRecyclerView.setAdapter(mArticleAdapter);
-            View view = getLayoutInflater().inflate(R.layout.layout_empty, mSearchRecyclerView, false);
-            TextView emptyText = view.findViewById(R.id.empty_text);
-            emptyText.setText("大胸弟，换个关键词试试(･∀･)");
-            mArticleAdapter.setEmptyView(view);
-        } else {
-            mArticles = list;
-            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, list);
-            mSearchRecyclerView.setAdapter(mArticleAdapter);
-            mArticleAdapter.setType(false);
-            mCurrentCounter = mArticles.size();
-            mArticleAdapter.openLoadAnimation();
-            mArticleAdapter.setOnItemClickListener(this);
-            mArticleAdapter.setOnItemChildClickListener(this);
-            mArticleAdapter.setOnLoadMoreListener(this, mSearchRecyclerView);
-        }
-        //收起软键盘
-        mSearchView.clearFocus();
-    }
-
-    @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (0 != mArticles.size()) {
             Intent intent = new Intent(this, ArticleDetailActivity.class);
@@ -163,28 +130,49 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
             case R.id.article_favorite:
                 mPosition = position;
                 if (mArticles.get(position).collect)
-                    mSearchPresenter.uncollect(mArticles.get(position).id);
+                    presenter.uncollect(mArticles.get(position).id);
                 else
-                    mSearchPresenter.collect(mArticles.get(position).id);
+                    presenter.collect(mArticles.get(position).id);
                 break;
         }
     }
 
     @Override
     public void onLoadMoreRequested() {
-        mSearchRecyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mCurrentCounter < TOTAL_COUNTER) {
-                    //Data are all loaded.
-                    mArticleAdapter.loadMoreEnd();
-                } else {
-                    page++;
-                    mSearchPresenter.getSearchArticleListByMore(page, key);
-                }
+        mSearchRecyclerView.postDelayed(() -> {
+            if (mCurrentCounter < TOTAL_COUNTER) {
+                //Data are all loaded.
+                mArticleAdapter.loadMoreEnd();
+            } else {
+                page++;
+                presenter.getSearchArticleListByMore(page, key);
             }
-
         }, 1000);
+    }
+
+    @Override
+    public void setArticleData(BaseBean<Article> list) {
+        if (list.data.datas.size() == 0) {
+            //空数据的情况下才显示setEmptyView，且RecyclerView要match_parent才显示全
+            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, new ArrayList<Article.DataDetailBean>());
+            mSearchRecyclerView.setAdapter(mArticleAdapter);
+            View view = getLayoutInflater().inflate(R.layout.layout_empty, mSearchRecyclerView, false);
+            TextView emptyText = view.findViewById(R.id.empty_text);
+            emptyText.setText("大胸弟，换个关键词试试(･∀･)");
+            mArticleAdapter.setEmptyView(view);
+        } else {
+            mArticles = list.data.datas;
+            mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, list.data.datas);
+            mSearchRecyclerView.setAdapter(mArticleAdapter);
+            mArticleAdapter.setType(false);
+            mCurrentCounter = mArticles.size();
+            mArticleAdapter.openLoadAnimation();
+            mArticleAdapter.setOnItemClickListener(this);
+            mArticleAdapter.setOnItemChildClickListener(this);
+            mArticleAdapter.setOnLoadMoreListener(this, mSearchRecyclerView);
+        }
+        //收起软键盘
+        mSearchView.clearFocus();
     }
 
     @Override
@@ -193,10 +181,10 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
     }
 
     @Override
-    public void setArticleDataByMore(List<Article.DataBean.DataDetailBean> list) {
-        mArticles.addAll(list);
-        mCurrentCounter = list.size();
-        mArticleAdapter.addData(list);
+    public void setArticleDataByMore(BaseBean<Article> list) {
+        mArticles.addAll(list.data.datas);
+        mCurrentCounter = list.data.datas.size();
+        mArticleAdapter.addData(list.data.datas);
         mArticleAdapter.loadMoreComplete();
     }
 
@@ -225,7 +213,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
         mArticleAdapter.remove(mPosition);
         mArticleAdapter.notifyDataSetChanged();
         if (mArticles.size() == 0)
-            mSearchPresenter.getSearchArticleList(key);
+            presenter.getSearchArticleList(key);
     }
 
     @Override
@@ -233,11 +221,4 @@ public class SearchActivity extends BaseActivity implements SearchContract.ISear
         ToastUtil.showToast(errorMessage);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (null != mSearchPresenter) {
-            mSearchPresenter.unSubscribe();
-        }
-    }
 }

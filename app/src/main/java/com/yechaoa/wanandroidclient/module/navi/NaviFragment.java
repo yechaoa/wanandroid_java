@@ -1,67 +1,58 @@
 package com.yechaoa.wanandroidclient.module.navi;
 
 import android.content.Intent;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.NaviChildAdapter;
-import com.yechaoa.wanandroidclient.base.DelayFragment;
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseFragment;
 import com.yechaoa.wanandroidclient.bean.Navi;
 import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.ToastUtil;
-import com.yechaoa.yutils.YUtils;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.adapter.TabAdapter;
 import q.rorbin.verticaltablayout.widget.TabView;
 
-public class NaviFragment extends DelayFragment implements NaviContract.INaviView, BaseQuickAdapter.OnItemClickListener {
+public class NaviFragment extends BaseFragment<NaviPresenter> implements INaviView, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.tab_layout)
     VerticalTabLayout mTabLayout;
     @BindView(R.id.navi_recycler_view)
     RecyclerView mNaviRecyclerView;
-    private NaviPresenter mNaviPresenter;
-    private List<Navi.DataBean> mNaviList;
-    private List<Navi.DataBean.ArticlesBean> mArticles;
+    private List<Navi> mNaviList;
+    private List<Navi.ArticlesBean> mArticles;
+
+    @Override
+    protected NaviPresenter createPresenter() {
+        return new NaviPresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
-        isReady = true;
-        delayLoad();
         return R.layout.fragment_navi;
     }
 
     @Override
     protected void initView() {
         mNaviRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-//        mNaviRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
     protected void initData() {
-
+        presenter.getNaviList();
     }
 
     @Override
-    public void showProgress() {
-        YUtils.showLoading(getActivity(), getResources().getString(R.string.loading));
-    }
-
-    @Override
-    public void hideProgress() {
-        YUtils.dismissLoading();
-    }
-
-    @Override
-    public void setNaviData(List<Navi.DataBean> list) {
-        mNaviList = list;
+    public void setNaviData(BaseBean<List<Navi>> list) {
+        mNaviList = list.data;
 
         mTabLayout.setTabAdapter((new TabAdapter() {
             @Override
@@ -96,17 +87,14 @@ public class NaviFragment extends DelayFragment implements NaviContract.INaviVie
         mTabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                final List<Navi.DataBean.ArticlesBean> articles = mNaviList.get(position).articles;
+                final List<Navi.ArticlesBean> articles = mNaviList.get(position).articles;
                 NaviChildAdapter naviChildAdapter = new NaviChildAdapter(R.layout.item_navi_list, articles);
                 mNaviRecyclerView.setAdapter(naviChildAdapter);
-                naviChildAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
-                        intent.putExtra(ArticleDetailActivity.WEB_URL, articles.get(position).link);
-                        intent.putExtra(ArticleDetailActivity.WEB_TITLE, articles.get(position).title);
-                        startActivity(intent);
-                    }
+                naviChildAdapter.setOnItemClickListener((adapter, view, position1) -> {
+                    Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+                    intent.putExtra(ArticleDetailActivity.WEB_URL, articles.get(position1).link);
+                    intent.putExtra(ArticleDetailActivity.WEB_TITLE, articles.get(position1).title);
+                    startActivity(intent);
                 });
             }
 
@@ -121,23 +109,11 @@ public class NaviFragment extends DelayFragment implements NaviContract.INaviVie
         NaviChildAdapter naviChildAdapter = new NaviChildAdapter(R.layout.item_navi_list, mArticles);
         mNaviRecyclerView.setAdapter(naviChildAdapter);
         naviChildAdapter.setOnItemClickListener(this);
-
     }
 
     @Override
     public void showNaviError(String errorMessage) {
         ToastUtil.showToast(errorMessage);
-    }
-
-    private boolean isReady = false;
-
-    @Override
-    protected void delayLoad() {
-        if (!isReady || !isVisible) {
-            return;
-        }
-        mNaviPresenter = new NaviPresenter(this);
-        mNaviPresenter.subscribe();
     }
 
     @Override
@@ -148,11 +124,4 @@ public class NaviFragment extends DelayFragment implements NaviContract.INaviVie
         startActivity(intent);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (null != mNaviPresenter) {
-            mNaviPresenter.unSubscribe();
-        }
-    }
 }

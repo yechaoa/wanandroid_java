@@ -9,8 +9,10 @@ package com.yechaoa.wanandroidclient.base;
  */
 public interface BaseView {
 
-    void showProgress();
+    void showLoading();
 
-    void hideProgress();
+    void hideLoading();
+
+    void onErrorCode(BaseBean bean);
 
 }

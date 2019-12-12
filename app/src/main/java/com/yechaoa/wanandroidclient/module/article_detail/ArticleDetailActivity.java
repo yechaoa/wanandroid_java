@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.just.agentweb.AgentWeb;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.base.BaseActivity;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 
 import butterknife.BindView;
 
@@ -111,6 +112,11 @@ public class ArticleDetailActivity extends BaseActivity {
     protected void onPause() {
         mAgentWeb.getWebLifeCycle().onPause();
         super.onPause();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override

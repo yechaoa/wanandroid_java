@@ -18,14 +18,14 @@ import java.util.List;
  * Created by yechao on 2018/4/30.
  * Describe :
  */
-public class TreeChildAdapter extends BaseQuickAdapter<TreeChild.DataBean.DatasBean, BaseViewHolder> {
+public class TreeChildAdapter extends BaseQuickAdapter<TreeChild.DatasBean, BaseViewHolder> {
 
     public TreeChildAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, TreeChild.DataBean.DatasBean item) {
+    protected void convert(BaseViewHolder helper, TreeChild.DatasBean item) {
         helper.setText(R.id.article_title, item.title);
         helper.setText(R.id.article_chapter, item.chapterName);
         helper.setText(R.id.article_author, item.author);

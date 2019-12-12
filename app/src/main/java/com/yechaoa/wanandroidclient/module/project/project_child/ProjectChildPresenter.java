@@ -1,14 +1,9 @@
 package com.yechaoa.wanandroidclient.module.project.project_child;
 
+import com.yechaoa.wanandroidclient.base.BaseBean;
+import com.yechaoa.wanandroidclient.base.BaseObserver;
+import com.yechaoa.wanandroidclient.base.BasePresenter;
 import com.yechaoa.wanandroidclient.bean.ProjectChild;
-import com.yechaoa.wanandroidclient.http.API;
-import com.yechaoa.wanandroidclient.http.RetrofitService;
-import com.yechaoa.yutils.LogUtil;
-
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -17,54 +12,25 @@ import rx.schedulers.Schedulers;
  * Created by yechao on 2018/4/27.
  * Describe :
  */
-public class ProjectChildPresenter implements ProjectChildContract.IProjectChildPresenter {
+class ProjectChildPresenter extends BasePresenter<IProjectChildView> {
 
-    private Subscription mSubscription = null;
-    private ProjectChildContract.IProjectChildView mIProjectChildView;
-
-    ProjectChildPresenter(ProjectChildContract.IProjectChildView projectChildView) {
-        mIProjectChildView = projectChildView;
+    ProjectChildPresenter(IProjectChildView projectChildView) {
+        super(projectChildView);
     }
 
-    @Override
-    public void subscribe() {
-        //getProjectChildList();
-    }
+    void getProjectChildList(int page, int cid) {
 
-    @Override
-    public void unSubscribe() {
-        if (null != mSubscription && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-        }
-    }
+        addDisposable(apiServer.getProjectChildList(page, cid), new BaseObserver<BaseBean<ProjectChild>>(baseView) {
+            @Override
+            public void onSuccess(BaseBean<ProjectChild> bean) {
+                baseView.setProjectChildData(bean);
+            }
 
-    @Override
-    public void getProjectChildList(int page, int cid) {
-
-        mSubscription = RetrofitService.create(API.WAZApi.class)
-                .getProjectChildList(page, cid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ProjectChild>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mIProjectChildView.hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.e(e.toString());
-                        mIProjectChildView.hideProgress();
-                        mIProjectChildView.showProjectChildError("加载失败(°∀°)ﾉ");
-                    }
-
-                    @Override
-                    public void onNext(ProjectChild project) {
-                        mIProjectChildView.showProgress();
-                        mIProjectChildView.setProjectChildData(project.data.datas);
-                    }
-                });
+            @Override
+            public void onError(String msg) {
+                baseView.showProjectChildError(msg + "(°∀°)ﾉ");
+            }
+        });
     }
 
 }
