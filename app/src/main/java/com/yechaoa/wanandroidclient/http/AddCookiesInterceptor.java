@@ -1,6 +1,6 @@
 package com.yechaoa.wanandroidclient.http;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.yechaoa.wanandroidclient.common.GlobalConstant;
 import com.yechaoa.yutils.SpUtil;

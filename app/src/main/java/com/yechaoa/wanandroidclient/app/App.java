@@ -2,7 +2,7 @@ package com.yechaoa.wanandroidclient.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.LogUtil;

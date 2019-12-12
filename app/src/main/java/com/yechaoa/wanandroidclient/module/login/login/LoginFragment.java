@@ -1,8 +1,8 @@
 package com.yechaoa.wanandroidclient.module.login.login;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentTransaction;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.fragment.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;

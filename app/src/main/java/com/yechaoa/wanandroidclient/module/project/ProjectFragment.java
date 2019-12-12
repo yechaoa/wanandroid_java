@@ -1,7 +1,7 @@
 package com.yechaoa.wanandroidclient.module.project;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;

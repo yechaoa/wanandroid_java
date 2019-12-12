@@ -2,7 +2,7 @@ package com.yechaoa.wanandroidclient.module.article_detail;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
