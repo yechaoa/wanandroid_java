@@ -13,8 +13,8 @@
 * [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
 
 # 截图
-<img src="pic/1.png" width="260px"/> <img src="pic/2.png" width="260px"/> <img src="pic/3.png" width="260px"/> <img src="pic/4.png" width="260px"/>
-<img src="pic/5.png" width="260px"/> <img src="pic/6.png" width="260px"/> <img src="pic/7.png" width="260px"/> <img src="pic/8.png" width="260px"/>
+<img src="pic/1.png" width="210px"/> <img src="pic/2.png" width="210px"/> <img src="pic/3.png" width="210px"/> <img src="pic/4.png" width="210px"/>
+<img src="pic/5.png" width="210px"/> <img src="pic/6.png" width="210px"/> <img src="pic/7.png" width="210px"/> <img src="pic/8.png" width="210px"/>
 
 # 感谢开源
 * [YUtils](https://github.com/yechaoa/YUtils)
