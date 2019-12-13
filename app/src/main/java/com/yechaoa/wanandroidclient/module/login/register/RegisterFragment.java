@@ -107,7 +107,7 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter> implements
                 } else
                     ToastUtil.showToast("两次密码不一样( ⊙ o ⊙ ) ");
             } else {
-                ToastUtil.showToast("Failed (°∀°)ﾉ");
+                ToastUtil.showToast("填写错误 (°∀°)ﾉ");
             }
         }
     }

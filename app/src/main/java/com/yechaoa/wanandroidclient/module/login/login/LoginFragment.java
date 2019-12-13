@@ -101,7 +101,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements ILogi
                     showLoading();
                     presenter.submit(mUsername, mPassword);
                 } else {
-                    ToastUtil.showToast("Failed (°∀°)ﾉ");
+                    ToastUtil.showToast("填写错误 (°∀°)ﾉ");
                 }
                 break;
             case R.id.btn_register:

@@ -61,10 +61,11 @@
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorAccent"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@drawable/selector_primary_btn"
         android:text="登录"
         android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
         android:textStyle="bold" />
 
     <Button
@@ -72,10 +73,11 @@
         style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         android:layout_gravity="end"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/shape_corners"
         android:text="注册"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_16" />
 
 </LinearLayout>

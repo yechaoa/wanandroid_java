@@ -85,10 +85,11 @@
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorAccent"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@drawable/selector_primary_btn"
         android:text="注册"
         android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
         android:textStyle="bold" />
 
 </LinearLayout>
