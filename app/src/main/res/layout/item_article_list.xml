@@ -7,8 +7,8 @@
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/dp_5"
-    app:cardElevation="@dimen/dp_10"
-    app:contentPadding="@dimen/dp_10">
+    app:cardElevation="@dimen/dp_2"
+    app:contentPadding="@dimen/dp_15">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/article_image"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_80"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
             android:contentDescription="@null"
             android:src="@mipmap/ic_launcher" />
 
@@ -75,8 +75,8 @@
 
         <ImageView
             android:id="@+id/article_favorite"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:contentDescription="@null"
             android:src="@drawable/ic_like_normal" />
 

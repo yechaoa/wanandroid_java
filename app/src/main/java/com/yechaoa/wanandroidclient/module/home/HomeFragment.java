@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.material.appbar.AppBarLayout;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.ArticleAdapter;
 import com.yechaoa.wanandroidclient.base.BaseBean;
@@ -15,6 +16,7 @@ import com.yechaoa.wanandroidclient.common.GlideImageLoader;
 import com.yechaoa.wanandroidclient.module.article_detail.ArticleDetailActivity;
 import com.yechaoa.yutils.ToastUtil;
 import com.yechaoa.yutils.YUtils;
+import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
@@ -28,14 +30,22 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
 
     @BindView(R.id.home_recycler_view)
     RecyclerView mHomeRecyclerView;
+    @BindView(R.id.banner)
+    com.youth.banner.Banner mBanner;
+    @BindView(R.id.app_bar)
+    AppBarLayout mAppBar;
     private List<Banner> mBanners;
     private List<Article.DataDetailBean> mArticles = new ArrayList<>();
     private ArticleAdapter mArticleAdapter;
-    private com.youth.banner.Banner mBanner;
     private int mCurrentCounter;//上一次加载的数量
     private int TOTAL_COUNTER = 20;//每一次加载的数量
     private int page = 0;//记录分页
     private int mPosition;
+
+    @Override
+    protected HomePresenter createPresenter() {
+        return new HomePresenter(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -44,7 +54,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
 
     @Override
     protected void initView() {
-        mBanner = new com.youth.banner.Banner(mContext);
         mHomeRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     }
 
@@ -53,24 +62,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
     @Override
-    protected HomePresenter createPresenter() {
-        return new HomePresenter(this);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+        presenter.getBannerData();
         presenter.getArticleList();
-    }
-
-    @Override
-    public void OnBannerClick(int position) {
-        if (0 != mBanners.size()) {
-            Intent intent = new Intent(mContext, ArticleDetailActivity.class);
-            intent.putExtra(ArticleDetailActivity.WEB_URL, mBanners.get(position).url);
-            intent.putExtra(ArticleDetailActivity.WEB_TITLE, mArticles.get(position).title);
-            startActivity(intent);
-        }
     }
 
     @Override
@@ -78,20 +73,19 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
         mBanners = list.data;
 
         List<String> images = new ArrayList<>();
-        //List<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
         for (int i = 0; i < list.data.size(); i++) {
             images.add(list.data.get(i).imagePath);
-            //titles.add(list.get(i).title);
+            titles.add(list.data.get(i).title);
         }
 
         //图片宽高比例是1.8，所以动态设置banner的高度
-        ViewGroup.LayoutParams lp = mBanner.getLayoutParams();
+        ViewGroup.LayoutParams lp = mAppBar.getLayoutParams();
         lp.height = (int) (YUtils.getScreenWidth() / 1.8);
+        ViewGroup.LayoutParams lp1 = mBanner.getLayoutParams();
+        lp1.height = (int) (YUtils.getScreenWidth() / 1.8);
 
-        //因为是头布局的方式添加，所以不显示标题和指示器。。
-        mBanner.setImages(images).setImageLoader(new GlideImageLoader()).start();
-
-        //设置点击事件
+        mBanner.setImages(images).setBannerTitles(titles).setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE).setImageLoader(new GlideImageLoader()).start();
         mBanner.setOnBannerListener(this);
     }
 
@@ -104,23 +98,22 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
     public void setArticleData(BaseBean<Article> list) {
         mArticles = list.data.datas;
         mCurrentCounter = mArticles.size();
-
         mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, list.data.datas);
-
-        mArticleAdapter.addHeaderView(mBanner);
-
-        //
-        presenter.getBannerData();
-
         mHomeRecyclerView.setAdapter(mArticleAdapter);
-        //开启加载动画
         mArticleAdapter.openLoadAnimation();
-        //item点击
         mArticleAdapter.setOnItemClickListener(this);
-        //item子view点击
         mArticleAdapter.setOnItemChildClickListener(this);
-        //加载更多
         mArticleAdapter.setOnLoadMoreListener(this, mHomeRecyclerView);
+    }
+
+    @Override
+    public void OnBannerClick(int position) {
+        if (0 != mBanners.size()) {
+            Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+            intent.putExtra(ArticleDetailActivity.WEB_URL, mBanners.get(position).url);
+            intent.putExtra(ArticleDetailActivity.WEB_TITLE, mArticles.get(position).title);
+            startActivity(intent);
+        }
     }
 
     @Override

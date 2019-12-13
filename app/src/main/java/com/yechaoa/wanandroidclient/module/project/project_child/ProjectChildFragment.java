@@ -27,7 +27,6 @@ public class ProjectChildFragment extends BaseFragment<ProjectChildPresenter> im
     @BindView(R.id.project_child_recycler_view)
     RecyclerView mPCRecyclerView;
     private List<ProjectChild.DatasBean> mPCList;
-    private int mCid;
 
     /**
      * 创建fragment
@@ -55,13 +54,13 @@ public class ProjectChildFragment extends BaseFragment<ProjectChildPresenter> im
 
     @Override
     protected void initView() {
-        mCid = getArguments().getInt(CID);
         mPCRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     }
 
     @Override
     protected void initData() {
-        presenter.getProjectChildList(0, mCid);
+        int cid = getArguments().getInt(CID);
+        presenter.getProjectChildList(0, cid);
     }
 
     @Override

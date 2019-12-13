@@ -75,6 +75,7 @@ public class NaviFragment extends BaseFragment<NaviPresenter> implements INaviVi
                 return new TabView.TabTitle.Builder()
                         .setContent(mNaviList.get(position).name)
                         .setTextColor(0xFF2196F3, 0xFF757575)
+                        .setTextSize(18)
                         .build();
             }
 

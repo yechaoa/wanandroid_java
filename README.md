@@ -12,14 +12,9 @@
 # 接口
 * [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
 
-# APK
-<img src="pic/QRcode.png" width="260px"/>
-
 # 截图
-<img src="pic/1.jpeg" width="280px"/> <img src="pic/2.jpeg" width="280px"/> <img src="pic/3.jpeg" width="280px"/>
-<img src="pic/4.jpeg" width="280px"/> <img src="pic/5.jpeg" width="280px"/> <img src="pic/6.jpeg" width="280px"/>
-<img src="pic/7.jpeg" width="280px"/> <img src="pic/8.jpeg" width="280px"/>
-
+<img src="pic/1.png" width="260px"/> <img src="pic/2.png" width="260px"/> <img src="pic/3.png" width="260px"/> <img src="pic/4.png" width="260px"/>
+<img src="pic/5.png" width="260px"/> <img src="pic/6.png" width="260px"/> <img src="pic/7.png" width="260px"/> <img src="pic/8.png" width="260px"/>
 
 # 感谢开源
 * [YUtils](https://github.com/yechaoa/YUtils)
@@ -40,6 +35,7 @@
 * [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid)
 
 # 更新日志
+* 2019-12-14 多处优化及调整
 * 2019-12-13 整个项目MVP架构调整
 * 2019-12-12 迁移至androidx及库版本升级
 * 2018-05-21 添加标题、调整Toast显示

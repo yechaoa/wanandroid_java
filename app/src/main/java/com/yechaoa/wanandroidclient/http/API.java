@@ -97,11 +97,6 @@ public class API {
         @POST("lg/collect/{id}/json")
         Observable<BaseBean> collectIn(@Path("id") Integer id);
 
-        //收藏站外文章
-        @FormUrlEncoded
-        @POST("lg/collect/add/json")
-        Observable<BaseBean> collectOut(@Field("title") String title, @Field("author") String author, @Field("link") String link);
-
         //取消收藏---文章列表
         @POST("lg/uncollect_originId/{id}/json")
         Observable<BaseBean> uncollect(@Path("id") Integer id);
@@ -117,7 +112,7 @@ public class API {
         //搜索
         @FormUrlEncoded
         @POST("article/query/{page}/json?")
-        Observable<Article> search(@Path("page") Integer page, @Field("k") String k);
+        Observable<BaseBean<Article>> search(@Path("page") Integer page, @Field("k") String k);
 
     }
 

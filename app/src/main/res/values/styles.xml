@@ -36,4 +36,9 @@
         <item name="android:background">@color/line</item>
     </style>
 
+    <!-- TabLayout字体大小 -->
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
 </resources>

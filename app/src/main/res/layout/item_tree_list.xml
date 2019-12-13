@@ -7,7 +7,6 @@
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/dp_5"
-    app:cardElevation="@dimen/dp_10"
     app:contentPadding="@dimen/dp_10">
 
     <LinearLayout
@@ -25,7 +24,7 @@
             android:maxLines="2"
             android:text="标题"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_18" />
 
         <TextView
             android:id="@+id/tree_child_name"
@@ -33,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:text="标题"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_16" />
 
     </LinearLayout>
 
