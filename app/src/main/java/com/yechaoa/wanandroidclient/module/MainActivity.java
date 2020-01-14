@@ -2,22 +2,14 @@ package com.yechaoa.wanandroidclient.module;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.view.GravityCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.yechaoa.wanandroidclient.R;
 import com.yechaoa.wanandroidclient.adapter.CommonViewPagerAdapter;
 import com.yechaoa.wanandroidclient.common.GlobalConstant;
@@ -33,6 +25,13 @@ import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.SpUtil;
 import com.yechaoa.yutils.ToastUtil;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -103,6 +102,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onPageSelected(int position) {
             mBottomNavigation.getMenu().getItem(position).setChecked(true);
+            switch (position) {
+                case 0:
+                    mToolbar.setTitle(getResources().getString(R.string.title_home));
+                    break;
+                case 1:
+                    mToolbar.setTitle(getResources().getString(R.string.title_tree));
+                    break;
+                case 2:
+                    mToolbar.setTitle(getResources().getString(R.string.title_navi));
+                    break;
+                default:
+                    mToolbar.setTitle(getResources().getString(R.string.title_project));
+                    break;
+            }
         }
 
         @Override
@@ -120,19 +133,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mViewPager.setCurrentItem(0);
-                    mToolbar.setTitle(getResources().getString(R.string.title_home));
                     return true;
                 case R.id.navigation_tree:
                     mViewPager.setCurrentItem(1);
-                    mToolbar.setTitle(getResources().getString(R.string.title_tree));
                     return true;
                 case R.id.navigation_navi:
                     mViewPager.setCurrentItem(2);
-                    mToolbar.setTitle(getResources().getString(R.string.title_navi));
                     return true;
                 case R.id.navigation_project:
                     mViewPager.setCurrentItem(3);
-                    mToolbar.setTitle(getResources().getString(R.string.title_project));
                     return true;
             }
             return false;
