@@ -1,4 +1,4 @@
-# WanAndroidClient
+# wanandroid_java
 ### 玩安卓客户端 MD + Retrofit + RxJava + MVP + AndroidX
 
 ![](https://img.shields.io/badge/language-java-orange.svg)
