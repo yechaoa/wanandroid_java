@@ -1,5 +1,6 @@
-# wanandroid_java
-### 玩安卓客户端 MD + Retrofit + RxJava + MVP + AndroidX
+# 玩安卓 Java版本
+
+### MD + Retrofit + RxJava + MVP + AndroidX
 
 ![](https://img.shields.io/badge/language-java-orange.svg)
 ![](https://img.shields.io/hexpm/l/plug.svg)
@@ -9,6 +10,7 @@
 * [玩安卓 Java版本](https://github.com/yechaoa/wanandroid_java)
 * [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
 * [玩安卓 Kotlin版本](https://github.com/yechaoa/wanandroid_kotlin)
+* [玩安卓 Jetpack版本](https://github.com/yechaoa/wanandroid_jetpack)
 
 # 接口
 * [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
