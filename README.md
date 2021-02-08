@@ -12,9 +12,6 @@
 * [玩安卓 Kotlin版本](https://github.com/yechaoa/wanandroid_kotlin)
 * [玩安卓 Jetpack版本](https://github.com/yechaoa/wanandroid_jetpack)
 
-# 接口
-* [玩Android 开放API](http://www.wanandroid.com/blog/show/2)
-
 # 截图
 <img src="pic/1.png" width="210px"/> <img src="pic/2.png" width="210px"/> <img src="pic/3.png" width="210px"/> <img src="pic/4.png" width="210px"/>
 <img src="pic/5.png" width="210px"/> <img src="pic/6.png" width="210px"/> <img src="pic/7.png" width="210px"/> <img src="pic/8.png" width="210px"/>
@@ -32,10 +29,6 @@
 * [AgentWeb](https://github.com/Justson/AgentWeb)
 * [BRVAH](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 
-
-# 参考
-* [todoapp](https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp)
-* [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid)
 
 # 更新日志
 * 2019-12-14 多处优化及调整
